@@ -1,36 +1,126 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Promise and Hope
 
-## Getting Started
+A modern, faith-inspired charity website built with Next.js, Prisma, SQLite/PostgreSQL, and Stripe.
 
-First, run the development server:
+## Requirements
+
+- Node.js 20.9+
+- Stripe account (test mode for development)
+
+## Quick start
 
 ```bash
+npm install
+cp .env.example .env.local   # then add your Stripe keys
+npm run db:push
+npm run db:seed
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Environment variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Copy `.env.example` to `.env.local`:
 
-## Learn More
+| Variable | Description |
+|----------|-------------|
+| `DATABASE_URL` | SQLite: `file:./dev.db` (relative to `prisma/`). Production: PostgreSQL URL |
+| `NEXT_PUBLIC_SITE_URL` | Public site URL for Stripe redirects |
+| `STRIPE_SECRET_KEY` | Stripe secret key (`sk_test_...`) |
+| `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Stripe publishable key (optional, for future Elements) |
+| `STRIPE_WEBHOOK_SECRET` | Webhook signing secret from Stripe CLI or Dashboard |
+| `NEXT_PUBLIC_LOAD_LOCAL_IMAGES` | Set `true` when images exist in `/public/images/` |
 
-To learn more about Next.js, take a look at the following resources:
+## Database
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+All content lives in the database — nothing is hardcoded in the app.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Models
 
-## Deploy on Vercel
+- **SiteSetting** — org info, hero copy, donation amounts, CTAs
+- **PageHero** — per-page banner images and text
+- **NavLink** — main and footer navigation
+- **Service, Project, CaseStory, RegionalOffice, GalleryItem**
+- **Testimonial, ImpactStat, CoreValue, TimelineEvent, TeamMember**
+- **DonationCause, Donation** — causes and payment records
+- **ContactMessage, NewsletterSubscriber**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Commands
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npm run db:push      # Apply schema (dev)
+npm run db:seed      # Seed initial content
+npm run db:studio    # Browse data in Prisma Studio
+npm run db:migrate   # Create migrations (production)
+```
+
+### Production database
+
+Switch to PostgreSQL by updating `prisma/schema.prisma`:
+
+```prisma
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+```
+
+Then set `DATABASE_URL` to your Postgres connection string and run `npm run db:migrate`.
+
+## Stripe donations
+
+1. Add keys to `.env.local`
+2. Donate form → `POST /api/donate/create-checkout` → Stripe Checkout
+3. Success redirect → `/donate/success?session_id=...`
+4. Webhook `POST /api/stripe/webhook` marks donations complete and updates project totals
+
+### Local webhook testing
+
+```bash
+stripe listen --forward-to localhost:3000/api/stripe/webhook
+```
+
+Copy the webhook signing secret into `STRIPE_WEBHOOK_SECRET`.
+
+Use test card: `4242 4242 4242 4242`.
+
+## Images
+
+Place files under `/public/images/{hero,projects,stories,gallery,team,offices}/` and update URLs in the database via **Prisma Studio** (`npm run db:studio`) on `PageHero`, `Project`, `Service`, etc.
+
+Set `NEXT_PUBLIC_LOAD_LOCAL_IMAGES=true` to load real files instead of placeholders.
+
+## Editing content
+
+Use **Prisma Studio** (`npm run db:studio`) or any SQL client. No code changes needed for:
+
+- Projects, stories, services, offices, gallery
+- Navigation links
+- Site settings and page heroes
+- Donation causes and suggested amounts
+- Team, timeline, values, testimonials, impact stats
+
+## Project structure
+
+```
+prisma/
+  schema.prisma    # Database schema
+  seed.ts          # Initial data (run once)
+src/
+  app/             # Pages and API routes
+  components/      # UI components
+  lib/
+    prisma.ts      # DB client
+    queries/       # Data access layer
+    stripe.ts      # Stripe client
+  types/           # Shared TypeScript types
+```
+
+## Tech stack
+
+- Next.js 16 (App Router)
+- Prisma 5 + SQLite (dev) / PostgreSQL (prod)
+- Stripe Checkout
+- TypeScript, Tailwind CSS v4, Framer Motion
+- React Hook Form + Zod

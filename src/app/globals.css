@@ -1,26 +1,107 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #faf8f4;
+  --foreground: #2c3330;
+  --card: #ffffff;
+  --card-foreground: #2c3330;
+  --primary: #1e4d3a;
+  --primary-foreground: #faf8f4;
+  --secondary: #e8efe6;
+  --secondary-foreground: #1e4d3a;
+  --accent: #c4a35a;
+  --accent-foreground: #2c3330;
+  --muted: #f0ebe3;
+  --muted-foreground: #5c6660;
+  --border: #ddd8ce;
+  --input: #ddd8ce;
+  --ring: #1e4d3a;
+  --destructive: #b91c1c;
+  --radius: 0.75rem;
+  --sage: #d4e4d1;
+  --cream: #faf8f4;
+  --forest: #1e4d3a;
+  --gold: #c4a35a;
+  --charcoal: #2c3330;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-destructive: var(--destructive);
+  --color-sage: var(--sage);
+  --color-cream: var(--cream);
+  --color-forest: var(--forest);
+  --color-gold: var(--gold);
+  --color-charcoal: var(--charcoal);
+  --font-family-heading: var(--font-playfair), Georgia, "Times New Roman", serif;
+  --font-family-body: var(--font-dm-sans), system-ui, sans-serif;
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-dm-sans), system-ui, sans-serif;
+    @apply antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: var(--foreground);
+    font-family: var(--font-playfair), Georgia, serif;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .glass-nav {
+    @apply bg-card/80 backdrop-blur-md;
+  }
 }
