@@ -95,8 +95,18 @@ If you use **Neon**, set `DATABASE_URL` to the `-pooler` host and append `?pgbou
 
 1. Add keys to `.env.local`
 2. Donate form → `POST /api/donate/create-checkout` → Stripe Checkout
-3. Success redirect → `/donate/success?session_id=...`
-4. Webhook `POST /api/stripe/webhook` marks donations complete and updates project totals
+3. Success redirect → `/donate/success?session_id=...` (confirms payment with Stripe immediately)
+4. Webhook `POST /api/stripe/webhook` — backup for completing donations if the user closes the tab before the success page loads
+
+### Production Stripe webhook (recommended)
+
+In [Stripe Dashboard → Webhooks](https://dashboard.stripe.com/webhooks), add:
+
+- **URL:** `https://your-domain.vercel.app/api/stripe/webhook`
+- **Events:** `checkout.session.completed`, `checkout.session.expired`
+- Copy the signing secret to Vercel as `STRIPE_WEBHOOK_SECRET`
+
+Without this, donations still complete via the success page, but project totals may not update if the user never lands there.
 
 ### Local webhook testing
 

@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
 import type Stripe from "stripe";
-import { prisma } from "@/lib/prisma";
 import { getStripe } from "@/lib/stripe";
+import { completeDonationFromCheckoutSession } from "@/lib/donations/complete-donation";
+import { prisma } from "@/lib/prisma";
 
 export async function POST(request: Request) {
   const body = await request.text();
@@ -26,31 +27,7 @@ export async function POST(request: Request) {
     switch (event.type) {
       case "checkout.session.completed": {
         const session = event.data.object as Stripe.Checkout.Session;
-        const donationId = session.metadata?.donationId;
-
-        if (donationId) {
-          const donation = await prisma.donation.update({
-            where: { id: donationId },
-            data: {
-              status: "completed",
-              stripePaymentIntentId:
-                typeof session.payment_intent === "string"
-                  ? session.payment_intent
-                  : session.payment_intent?.id ?? null,
-              completedAt: new Date(),
-            },
-            include: { project: true },
-          });
-
-          if (donation.projectId && donation.project) {
-            await prisma.project.update({
-              where: { id: donation.projectId },
-              data: {
-                raisedAmount: donation.project.raisedAmount + donation.amount,
-              },
-            });
-          }
-        }
+        await completeDonationFromCheckoutSession(session);
         break;
       }
       case "checkout.session.expired": {

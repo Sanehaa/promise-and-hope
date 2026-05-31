@@ -4,17 +4,30 @@ import { ShareMissionButton } from "@/components/donation/ShareMissionButton";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { formatCurrency } from "@/lib/utils";
-import { getDonationByStripeSession } from "@/lib/queries";
+import { resolveDonationForSuccessPage } from "@/lib/donations/complete-donation";
 import { ScrollReveal } from "@/components/shared/ScrollReveal";
 
 type Props = {
   searchParams: Promise<{ session_id?: string }>;
 };
 
+function statusLabel(status: string): string {
+  switch (status) {
+    case "completed":
+      return "Confirmed";
+    case "pending":
+      return "Processing";
+    case "expired":
+      return "Expired";
+    default:
+      return status;
+  }
+}
+
 export default async function DonationSuccessPage({ searchParams }: Props) {
   const { session_id: sessionId } = await searchParams;
   const donation = sessionId
-    ? await getDonationByStripeSession(sessionId)
+    ? await resolveDonationForSuccessPage(sessionId)
     : null;
 
   return (
@@ -55,7 +68,13 @@ export default async function DonationSuccessPage({ searchParams }: Props) {
                   </div>
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Status</span>
-                    <span className="font-medium capitalize">{donation.status}</span>
+                    <span
+                      className={`font-medium ${
+                        donation.status === "completed" ? "text-primary" : ""
+                      }`}
+                    >
+                      {statusLabel(donation.status)}
+                    </span>
                   </div>
                 </div>
               </CardContent>
