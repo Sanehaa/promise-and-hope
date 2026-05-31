@@ -25,8 +25,8 @@ Copy `.env.example` to `.env.local`:
 
 | Variable | Description |
 |----------|-------------|
-| `DATABASE_URL` | **Pooled** Postgres URL for the app (see Vercel section below) |
-| `DIRECT_DATABASE_URL` | Direct Postgres URL — migrations/seed only, not used at runtime |
+| `DATABASE_URL` | **Pooled** Postgres URL for the app (`POSTGRES_PRISMA_URL` on Vercel) |
+| `DIRECT_URL` | Direct Postgres URL for migrations/seed only (`POSTGRES_URL_NON_POOLING`) |
 | `NEXT_PUBLIC_SITE_URL` | Public site URL for Stripe redirects |
 | `STRIPE_SECRET_KEY` | Stripe secret key (`sk_test_...`) |
 | `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Stripe publishable key (optional, for future Elements) |
@@ -63,15 +63,15 @@ The schema uses PostgreSQL. Set two connection strings in Vercel:
 | Vercel env var | Map from (Vercel Postgres integration) |
 |----------------|----------------------------------------|
 | `DATABASE_URL` | `POSTGRES_PRISMA_URL` |
-| `DIRECT_DATABASE_URL` | `POSTGRES_URL_NON_POOLING` |
+| `DIRECT_URL` | `POSTGRES_URL_NON_POOLING` |
 
-**Do not** point `DATABASE_URL` at the migration URL or a direct/non-pooled URL. That causes `too many connections for role "prisma_migration"` on serverless.
+**Do not** put a URL containing `prisma_migration` in `DATABASE_URL`. That role is for migrations only and causes `too many connections` on serverless.
 
 After setting env vars, redeploy. Run migrations once locally or in CI:
 
 ```bash
-DIRECT_DATABASE_URL="..." DATABASE_URL="..." npx prisma db push
-DIRECT_DATABASE_URL="..." DATABASE_URL="..." npm run db:seed
+DIRECT_URL="..." DATABASE_URL="..." npx prisma db push
+DIRECT_URL="..." DATABASE_URL="..." npm run db:seed
 ```
 
 ## Deploying on Vercel
@@ -82,12 +82,12 @@ DIRECT_DATABASE_URL="..." DATABASE_URL="..." npm run db:seed
    | Name | Value |
    |------|--------|
    | `DATABASE_URL` | `POSTGRES_PRISMA_URL` (pooled) |
-   | `DIRECT_DATABASE_URL` | `POSTGRES_URL_NON_POOLING` |
+   | `DIRECT_URL` | `POSTGRES_URL_NON_POOLING` |
    | `NEXT_PUBLIC_SITE_URL` | `https://your-domain.vercel.app` |
    | Stripe keys | as in `.env.example` |
 
 3. **Redeploy** after changing env vars.
-4. **Seed** the production DB once (from your machine using `DIRECT_DATABASE_URL`).
+4. **Seed** the production DB once (from your machine using `DIRECT_URL`).
 
 If you use **Neon**, set `DATABASE_URL` to the `-pooler` host and append `?pgbouncer=true&connection_limit=1`.
 
