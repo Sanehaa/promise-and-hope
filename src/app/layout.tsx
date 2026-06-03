@@ -6,7 +6,7 @@ import { Footer } from "@/components/layout/Footer";
 import { StickyDonateButton } from "@/components/layout/StickyDonateButton";
 import { PageTransition } from "@/components/layout/PageTransition";
 import { defaultMetadata } from "@/lib/metadata";
-import { getNavLinks } from "@/lib/queries";
+import { getLayoutNavLinks } from "@/lib/queries";
 import "./globals.css";
 
 const playfair = Playfair_Display({
@@ -30,11 +30,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [mainNav, footerQuick, footerUseful] = await Promise.all([
-    getNavLinks("main"),
-    getNavLinks("footer_quick"),
-    getNavLinks("footer_useful"),
-  ]);
+  const { main: mainNav, footerQuick, footerUseful } = await getLayoutNavLinks();
 
   return (
     <html lang="en" className={`${playfair.variable} ${dmSans.variable} h-full`}>

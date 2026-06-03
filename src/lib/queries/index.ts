@@ -18,6 +18,29 @@ export async function getNavLinks(group: "main" | "footer_quick" | "footer_usefu
   });
 }
 
+/** Single query for layout — avoids 3 parallel connections on a small pool */
+export async function getLayoutNavLinks() {
+  const rows = await prisma.navLink.findMany({
+    where: {
+      published: true,
+      group: { in: ["main", "footer_quick", "footer_useful"] },
+    },
+    orderBy: { sortOrder: "asc" },
+    select: { label: true, href: true, group: true },
+  });
+
+  const pick = (group: string) =>
+    rows
+      .filter((r) => r.group === group)
+      .map(({ label, href }) => ({ label, href }));
+
+  return {
+    main: pick("main"),
+    footerQuick: pick("footer_quick"),
+    footerUseful: pick("footer_useful"),
+  };
+}
+
 export async function getPageHero(pageKey: string) {
   return prisma.pageHero.findUnique({ where: { pageKey } });
 }
