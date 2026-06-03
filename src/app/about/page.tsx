@@ -47,7 +47,7 @@ export default async function AboutPage() {
       <PageHero
         title={hero?.title ?? "About Us"}
         description={hero?.description ?? ""}
-        image={hero?.imageUrl ?? "/images/hero/about-hero.jpg"}
+        image={hero?.imageUrl ?? "/images/hero/about-hero.png"}
         imageAlt={hero?.imageAlt ?? "About Promise and Hope"}
       />
 
@@ -68,7 +68,7 @@ export default async function AboutPage() {
             <ScrollReveal direction="right" delay={0.1}>
               <div className="relative aspect-video overflow-hidden rounded-2xl shadow-lg">
                 <ImageWithFallback
-                  src={missionHero?.imageUrl ?? "/images/hero/mission.jpg"}
+                  src={missionHero?.imageUrl ?? "/images/hero/mission.png"}
                   alt="Community outreach"
                   fill
                   sizes="50vw"

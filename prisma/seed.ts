@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 const IMG = {
   hero: {
     home: "/images/hero/home-hero.png",
-    about: "/images/hero/about-hero.jpg",
+    about: "/images/hero/about-hero.png",
     services: "/images/hero/services-hero.jpg",
     projects: "/images/hero/projects-hero.jpg",
     stories: "/images/hero/stories-hero.jpg",
@@ -13,7 +13,7 @@ const IMG = {
     gallery: "/images/hero/gallery-hero.jpg",
     contact: "/images/hero/contact-hero.jpg",
     donate: "/images/hero/donate-hero.jpg",
-    mission: "/images/hero/mission.jpg",
+    mission: "/images/hero/mission.png",
     cta: "/images/hero/donation-cta.jpg",
   },
   projects: {

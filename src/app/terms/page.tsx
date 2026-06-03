@@ -17,7 +17,7 @@ export default async function TermsPage() {
       <PageHero
         title={hero?.title ?? "Terms & Conditions"}
         description={hero?.description ?? ""}
-        image={hero?.imageUrl ?? "/images/hero/about-hero.jpg"}
+        image={hero?.imageUrl ?? "/images/hero/about-hero.png"}
         imageAlt={hero?.imageAlt ?? "Terms"}
       />
       <section className="py-16">

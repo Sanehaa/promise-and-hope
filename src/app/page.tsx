@@ -64,7 +64,7 @@ export default async function HomePage() {
       />
       <ImpactStats stats={impactStats} />
       <MissionSection
-        imageUrl={missionHero?.imageUrl ?? "/images/hero/mission.jpg"}
+        imageUrl={missionHero?.imageUrl ?? "/images/hero/mission.png"}
         title={settings["home.mission.title"] ?? ""}
         description={settings["home.mission.description"] ?? ""}
       />

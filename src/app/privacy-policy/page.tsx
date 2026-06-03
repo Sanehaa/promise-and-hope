@@ -17,7 +17,7 @@ export default async function PrivacyPolicyPage() {
       <PageHero
         title={hero?.title ?? "Privacy Policy"}
         description={hero?.description ?? ""}
-        image={hero?.imageUrl ?? "/images/hero/about-hero.jpg"}
+        image={hero?.imageUrl ?? "/images/hero/about-hero.png"}
         imageAlt={hero?.imageAlt ?? "Privacy policy"}
       />
       <section className="py-16">

@@ -4,12 +4,16 @@ let stripe: Stripe | null = null;
 
 export function getStripe(): Stripe {
   const key = process.env.STRIPE_SECRET_KEY;
+  console.log("STRIPE KEY PREFIX:", key?.slice(0, 8));
+
   if (!key) {
     throw new Error("STRIPE_SECRET_KEY is not set");
   }
+
   if (!stripe) {
     stripe = new Stripe(key);
   }
+
   return stripe;
 }
 
