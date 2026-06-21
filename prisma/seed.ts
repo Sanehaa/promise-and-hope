@@ -56,10 +56,10 @@ const IMG = {
     volunteer3: "/images/gallery/volunteer-3.jpeg",
   },
   team: {
-    director: "/images/team/director.jpg",
-    operations: "/images/team/operations.jpg",
-    programs: "/images/team/programs.jpg",
-    partnerships: "/images/team/partnerships.jpg",
+    director: "/images/team/mamu.jpg",
+    operations: "/images/team/me.png",
+    programs: "/images/team/mami.jpg",
+    partnerships: "/images/team/sbhai.jpg",
   },
   offices: {
     london: "/images/offices/london.jpg",
@@ -204,10 +204,73 @@ async function main() {
 
   await prisma.caseStory.createMany({
     data: [
-      { slug: "school-support-changes-a-family", title: "School Support Changes a Family's Year", location: "Lahore, Pakistan", category: "Education", excerpt: "When school fees became impossible to pay, Promise and Hope helped keep two children in the classroom.", content: JSON.stringify(["The Khan family had always prioritised education, but lost income made school fees impossible.", "Through our Lahore school support project, both children received fees and uniforms for the year.", "Their mother said it was the first time in months she could sleep without worry about school."]), impactSummary: "Two children remained in school; a family restored to hope.", imageUrl: IMG.stories.education, featured: true, sortOrder: 0 },
-      { slug: "books-and-hope-in-sheikhupura", title: "Books and Hope in Sheikhupura", location: "Sheikhupura, Pakistan", category: "Education", excerpt: "School supplies helped Ayesha return to class with confidence.", content: JSON.stringify(["Ayesha had missed weeks of school because her family could not afford books and a bag.", "Our Sheikhupura school support team provided everything she needed before the new term.", "Ayesha is back in class and doing well — she hopes to become a teacher one day."]), impactSummary: "One child returned to education with dignity and renewed confidence.", imageUrl: IMG.stories.education01, featured: true, sortOrder: 1 },
-      { slug: "food-parcels-during-covid", title: "Food Parcels When Income Disappeared", location: "Lahore, Pakistan", category: "Food Relief", excerpt: "During COVID lockdowns, food parcels brought relief to a household with no income.", content: JSON.stringify(["When lockdowns stopped daily wage work, the Rashid family had no savings and no food.", "Promise and Hope delivered monthly food parcels through our COVID distribution in Lahore.", "The family shared that the parcels were an answer to prayer in their hardest season."]), impactSummary: "A family fed through lockdown; dignity preserved in crisis.", imageUrl: IMG.stories.relief, featured: true, sortOrder: 2 },
-      { slug: "family-relief-in-sheikhupura", title: "Family Relief in a Difficult Season", location: "Sheikhupura, Pakistan", category: "Family Support", excerpt: "After sudden bereavement, practical support helped a widow care for her children.", content: JSON.stringify(["When a father passed away, his widow was left caring for three young children alone.", "Our family relief fund provided groceries and essentials within days of referral.", "The family received not only food, but the compassion of volunteers who prayed with them."]), impactSummary: "Timely relief for a grieving family; hope renewed through community care.", imageUrl: IMG.stories.family, sortOrder: 3 },
+      {
+        slug: "school-support-changes-a-familys-future",
+        title: "School Support Changes a Family's Future",
+        location: "Lahore, Pakistan",
+        category: "Education",
+        excerpt:
+          "When rising costs threatened to pull two children out of school, educational assistance from Promise and Hope kept their studies on track.",
+        content: JSON.stringify([
+          "For one Lahore family, every month brought a difficult choice: pay for school or put food on the table. As costs rose, keeping both children in education felt increasingly out of reach.",
+          "Promise and Hope stepped in with educational assistance — helping cover school-related expenses so the children could continue learning without interruption.",
+          "Their parents shared that the support lifted a heavy burden. Today, both children remain in school, studying with the hope of building a brighter future for themselves and their family.",
+        ]),
+        impactSummary: "Two children stayed in school; a family regained hope for the years ahead.",
+        imageUrl: IMG.stories.education,
+        featured: true,
+        sortOrder: 0,
+      },
+      {
+        slug: "books-and-hope-in-sheikhupura",
+        title: "Books and Hope in Sheikhupura",
+        location: "Sheikhupura, Pakistan",
+        category: "Education",
+        excerpt:
+          "When Ayesha's parents could not afford school supplies, our education programme provided the books and materials she needed for the year.",
+        content: JSON.stringify([
+          "Ayesha loves learning, but her parents were struggling to afford the books, stationery, and learning materials required for the academic year.",
+          "Through Promise and Hope's education programme in Sheikhupura, she received the supplies she needed — notebooks, pens, textbooks, and everything else to return to class prepared.",
+          "With the practical barriers removed, Ayesha continues her education with confidence. She attends school regularly and carries a renewed sense of hope for what lies ahead.",
+        ]),
+        impactSummary: "One child equipped for school; confidence and hope restored.",
+        imageUrl: IMG.projects.education01,
+        featured: true,
+        sortOrder: 1,
+      },
+      {
+        slug: "food-parcels-during-covid-19",
+        title: "Food Parcels During COVID-19",
+        location: "Lahore, Pakistan",
+        category: "Food Relief",
+        excerpt:
+          "When lockdowns left daily wage earners without income, food parcels helped vulnerable families meet their basic needs.",
+        content: JSON.stringify([
+          "During the COVID-19 lockdowns, many daily wage earners in Lahore suddenly lost their source of income. With no savings to fall back on, families faced empty cupboards and growing anxiety.",
+          "Promise and Hope distributed food parcels containing essential groceries — rice, flour, cooking oil, and other staples — to households referred by local volunteers and community contacts.",
+          "For families who did not know where their next meal would come from, the parcels offered more than food. They brought relief, dignity, and a reminder that they were not forgotten.",
+        ]),
+        impactSummary: "Vulnerable families fed during lockdown; practical help in an uncertain time.",
+        imageUrl: IMG.stories.relief,
+        featured: true,
+        sortOrder: 2,
+      },
+      {
+        slug: "family-relief-in-a-difficult-season",
+        title: "Family Relief in a Difficult Season",
+        location: "Sheikhupura, Pakistan",
+        category: "Family Support",
+        excerpt:
+          "After losing the family's primary breadwinner, a mother of three received food assistance and community support through a difficult period.",
+        content: JSON.stringify([
+          "Following the loss of the family's primary breadwinner, a mother of three in Sheikhupura faced significant financial challenges. Daily expenses, rent, and feeding her children became an overwhelming struggle.",
+          "Promise and Hope responded with food assistance and practical community support — groceries, essentials, and compassionate visits from volunteers who listened and prayed alongside the family.",
+          "While the road ahead remains challenging, the family has been able to navigate this difficult season with greater stability, knowing that practical help and human kindness are still within reach.",
+        ]),
+        impactSummary: "A grieving family supported with food and compassion as they worked towards stability.",
+        imageUrl: IMG.stories.family,
+        sortOrder: 3,
+      },
     ],
   });
 
@@ -257,9 +320,27 @@ async function main() {
 
   await prisma.testimonial.createMany({
     data: [
-      { name: "Amira H.", role: "Monthly Supporter", quote: "Knowing my small monthly gift helps children stay in school gives my giving real meaning.", sortOrder: 0 },
-      { name: "Thomas & Helen W.", role: "Supporters", quote: "We appreciate how transparent Promise and Hope is about where donations go.", sortOrder: 1 },
-      { name: "Reverend Samuel K.", role: "Community Partner", quote: "This is faithful, practical charity — education and food relief offered with compassion.", sortOrder: 2 },
+      {
+        name: "Sadia Khan",
+        role: "Lahore, Pakistan",
+        quote:
+          "Seeing children in our community receive educational support through Promise and Hope has been truly encouraging.",
+        sortOrder: 0,
+      },
+      {
+        name: "Imran Ali",
+        role: "Sheikhupura, Pakistan",
+        quote:
+          "The food assistance programme helped several families in our area during difficult times. We are grateful for their efforts.",
+        sortOrder: 1,
+      },
+      {
+        name: "Pastor Emmanuel Yousaf",
+        role: "Community Leader, Lahore",
+        quote:
+          "Supporting education and food assistance is one of the most meaningful ways we can serve our communities. Promise and Hope is bringing practical help and lasting hope to families in need.",
+        sortOrder: 2,
+      },
     ],
   });
 
@@ -294,8 +375,34 @@ async function main() {
 
   await prisma.teamMember.createMany({
     data: [
-      { name: "Reverend David Thompson", role: "Founder & Director", bio: "Leading Promise and Hope with a heart for education and compassionate service in Lahore and Sheikhupura.", imageUrl: IMG.team.director, sortOrder: 0 },
-      { name: "Fatima Hassan", role: "Programmes Coordinator", bio: "Coordinating school support and food relief projects with local volunteers and families.", imageUrl: IMG.team.partnerships, sortOrder: 1 },
+      {
+        name: "Pervaiz Sardar",
+        role: "Founder & Director",
+        bio: "Leading Promise and Hope with a vision for education and compassionate service in Lahore and Sheikhupura.",
+        imageUrl: IMG.team.director,
+        sortOrder: 0,
+      },
+      {
+        name: "Rakhil Shama",
+        role: "Programmes Coordinator",
+        bio: "Coordinating school support and food relief projects with local volunteers and partner communities.",
+        imageUrl: IMG.team.programs,
+        sortOrder: 1,
+      },
+      {
+        name: "Saneha Gill",
+        role: "Operations & Outreach",
+        bio: "Supporting day-to-day operations, donor communication, and outreach across Promise and Hope's programmes.",
+        imageUrl: IMG.team.operations,
+        sortOrder: 2,
+      },
+      {
+        name: "Sunny",
+        role: "Community Liaison",
+        bio: "Building relationships with families, volunteers, and community leaders on the ground in Pakistan.",
+        imageUrl: IMG.team.partnerships,
+        sortOrder: 3,
+      },
     ],
   });
 

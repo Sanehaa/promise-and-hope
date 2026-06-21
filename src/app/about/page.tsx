@@ -161,7 +161,7 @@ export default async function AboutPage() {
             title="Our Team"
             description="Dedicated leaders guiding Promise and Hope with wisdom and integrity."
           />
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-2 max-w-4xl mx-auto">
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
             {team.map((member, i) => (
               <ScrollReveal key={member.id} delay={i * 0.08}>
                 <Card className="overflow-hidden text-center">
