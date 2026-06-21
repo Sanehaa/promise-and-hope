@@ -30,7 +30,8 @@ export default async function AboutPage() {
       getSiteSettings([
         "about.story.title",
         "about.story.description",
-        "about.story.body",
+        "about.story.paragraph1",
+        "about.story.paragraph2",
         "about.mission",
         "about.vision",
         "donation.cta.title",
@@ -62,7 +63,10 @@ export default async function AboutPage() {
                 description={settings["about.story.description"] ?? ""}
               />
               <p className="mt-4 text-muted-foreground leading-relaxed">
-                {settings["about.story.body"] ?? ""}
+                {settings["about.story.paragraph1"] ?? ""}
+              </p>
+              <p className="mt-4 text-muted-foreground leading-relaxed">
+                {settings["about.story.paragraph2"] ?? ""}
               </p>
             </ScrollReveal>
             <ScrollReveal direction="right" delay={0.1}>
@@ -157,7 +161,7 @@ export default async function AboutPage() {
             title="Our Team"
             description="Dedicated leaders guiding Promise and Hope with wisdom and integrity."
           />
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-2 max-w-4xl mx-auto">
             {team.map((member, i) => (
               <ScrollReveal key={member.id} delay={i * 0.08}>
                 <Card className="overflow-hidden text-center">

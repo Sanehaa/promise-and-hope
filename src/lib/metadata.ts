@@ -10,7 +10,7 @@ export const defaultMetadata: Metadata = {
     template: `%s | ${siteName}`,
   },
   description:
-    "Promise and Hope is a faith-inspired charity supporting vulnerable communities through relief, education, healthcare and compassionate giving.",
+    "Promise and Hope is a faith-inspired charity supporting vulnerable families in Lahore and Sheikhupura through education, food relief, humanitarian assistance and compassionate giving.",
   keywords: [
     "charity",
     "donation",
@@ -18,7 +18,7 @@ export const defaultMetadata: Metadata = {
     "community support",
     "relief",
     "education",
-    "healthcare",
+    "humanitarian assistance",
   ],
   openGraph: {
     type: "website",
@@ -26,7 +26,7 @@ export const defaultMetadata: Metadata = {
     siteName,
     title: `${siteName} | Faith-Inspired Charity Supporting Communities`,
     description:
-      "Promise and Hope is a faith-inspired charity supporting vulnerable communities through relief, education, healthcare and compassionate giving.",
+      "Promise and Hope is a faith-inspired charity supporting vulnerable families in Lahore and Sheikhupura through education, food relief, humanitarian assistance and compassionate giving.",
     images: [
       {
         url: "/images/og-share.jpg",

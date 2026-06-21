@@ -63,7 +63,7 @@ export function NewsletterForm({ variant = "default", className }: NewsletterFor
         <Input
           id="newsletter-email"
           type="email"
-          placeholder="you@example.com"
+          placeholder="promiseandhope@outlook.com"
           aria-invalid={!!errors.email}
           aria-describedby={errors.email ? "newsletter-email-error" : undefined}
           className={cn("mt-1.5", isFooter && "bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground placeholder:text-primary-foreground/50")}

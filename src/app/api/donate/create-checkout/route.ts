@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { donationFormSchema } from "@/lib/validations";
 import { prisma } from "@/lib/prisma";
-import { getStripe, getSiteUrl } from "@/lib/stripe";
+import { getStripe, getSiteUrl, getStripeMode } from "@/lib/stripe";
 
 function generateReference() {
   return `PH-${Date.now().toString(36).toUpperCase()}`;
@@ -54,6 +54,13 @@ export async function POST(request: Request) {
       },
     });
 
+    const stripeMode = getStripeMode();
+    if (stripeMode === "test") {
+      console.warn(
+        "[Stripe Checkout] STRIPE_SECRET_KEY is sk_test_ on this server. Real cards will be declined."
+      );
+    }
+
     const stripe = getStripe();
     const siteUrl = getSiteUrl();
     const isMonthly = data.frequency === "monthly";
@@ -93,7 +100,12 @@ export async function POST(request: Request) {
       data: { stripeSessionId: session.id },
     });
 
-    return NextResponse.json({ url: session.url, reference });
+    return NextResponse.json({
+      url: session.url,
+      reference,
+      // Helps confirm test vs live if debugging (session.livemode matches secret key mode)
+      stripeLiveMode: session.livemode,
+    });
   } catch (error) {
     console.error("[Stripe Checkout]", error);
     const message =

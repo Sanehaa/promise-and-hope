@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 import { contactFormSchema } from "@/lib/validations";
 import { prisma } from "@/lib/prisma";
+import { Resend } from "resend";
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(request: Request) {
   try {
@@ -24,8 +27,28 @@ export async function POST(request: Request) {
       },
     });
 
-    return NextResponse.json({ success: true, message: "Message received" });
-  } catch {
+    await resend.emails.send({
+      from: "Promise & Hope <onboarding@resend.dev>",
+      to: process.env.CONTACT_RECEIVER_EMAIL!,
+      subject: `New Contact Message: ${parsed.data.subject}`,
+      replyTo: parsed.data.email,
+      html: `
+        <h2>New Contact Message</h2>
+        <p><strong>Name:</strong> ${parsed.data.fullName}</p>
+        <p><strong>Email:</strong> ${parsed.data.email}</p>
+        <p><strong>Phone:</strong> ${parsed.data.phone || "Not provided"}</p>
+        <p><strong>Subject:</strong> ${parsed.data.subject}</p>
+        <p><strong>Message:</strong></p>
+        <p>${parsed.data.message}</p>
+      `,
+    });
+
+    return NextResponse.json({
+      success: true,
+      message: "Message received and email sent",
+    });
+  } catch (error) {
+    console.error("Contact form error:", error);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }

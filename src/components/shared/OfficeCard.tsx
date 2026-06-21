@@ -5,6 +5,7 @@ import { MapPin, Phone, Mail, Clock, ExternalLink } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ImageWithFallback } from "./ImageWithFallback";
+import { getGoogleMapsSearchUrl } from "@/lib/maps";
 import { cn } from "@/lib/utils";
 
 export type OfficeView = {
@@ -54,7 +55,7 @@ export function OfficeCard({ office, className }: OfficeCardProps) {
             </li>
             <li className="flex gap-3">
               <Phone className="h-4 w-4 shrink-0 text-primary" aria-hidden />
-              <a href={`tel:${office.phone}`} className="hover:text-primary transition-colors">
+              <a href={`tel:${office.phone.replace(/\s/g, "")}`} className="hover:text-primary transition-colors">
                 {office.phone}
               </a>
             </li>
@@ -70,7 +71,7 @@ export function OfficeCard({ office, className }: OfficeCardProps) {
             </li>
           </ul>
           <Button variant="outline" size="sm" asChild className="w-full">
-            <a href={office.mapUrl} target="_blank" rel="noopener noreferrer">
+            <a href={getGoogleMapsSearchUrl(office.address)} target="_blank" rel="noopener noreferrer">
               <ExternalLink className="h-4 w-4" />
               View on Map
             </a>

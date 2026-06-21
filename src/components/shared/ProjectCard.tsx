@@ -47,11 +47,14 @@ export function ProjectCard({ project, className }: ProjectCardProps) {
           </p>
           <div className="mt-4">
             <ProgressBar value={progress} />
-            <div className="mt-2 flex justify-between text-xs font-medium">
+            <div className="mt-2 flex flex-wrap justify-between gap-x-4 gap-y-1 text-xs font-medium">
               <span className="text-primary">
                 Raised {formatCurrency(project.raisedAmount)}
               </span>
               <span className="text-muted-foreground">
+                {formatCurrency(Math.max(project.targetAmount - project.raisedAmount, 0))} remaining
+              </span>
+              <span className="text-muted-foreground w-full sm:w-auto sm:ml-auto">
                 Goal {formatCurrency(project.targetAmount)}
               </span>
             </div>

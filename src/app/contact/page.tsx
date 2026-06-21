@@ -3,6 +3,7 @@ import { Mail, Phone, MapPin, Clock, Globe, Share2, Heart, MessageCircle } from 
 import { PageHero } from "@/components/shared/PageHero";
 import { ContactForm } from "@/components/forms/ContactForm";
 import { Card, CardContent } from "@/components/ui/card";
+import { MapEmbed } from "@/components/shared/MapEmbed";
 import { getPageHero, getSiteSettings } from "@/lib/queries";
 import { createPageMetadata } from "@/lib/metadata";
 
@@ -28,7 +29,7 @@ export default async function ContactPage() {
   const contactInfo = [
     { icon: Mail, title: "Email", value: settings["org.email"], href: `mailto:${settings["org.email"]}` },
     { icon: Phone, title: "Phone", value: settings["org.phone"], href: `tel:${settings["org.phone"]?.replace(/\s/g, "")}` },
-    { icon: MapPin, title: "Main Office", value: settings["org.address"] },
+    { icon: MapPin, title: "Registered Office", value: settings["org.address"] },
     { icon: Clock, title: "Opening Hours", value: "Monday – Friday: 9:00 AM – 5:30 PM" },
   ];
 
@@ -75,17 +76,10 @@ export default async function ContactPage() {
             </div>
 
             <div>
-              <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-border bg-muted">
-                <div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center">
-                  <MapPin className="h-10 w-10 text-primary/40 mb-3" />
-                  <p className="font-heading text-lg font-semibold text-muted-foreground">
-                    Map Placeholder
-                  </p>
-                  <p className="mt-2 text-sm text-muted-foreground">
-                    Embed Google Maps here for the London Head Office.
-                  </p>
-                </div>
-              </div>
+              <MapEmbed
+                query={settings["org.address"] ?? "47 Findern Green, Sneinton, Nottingham, NG3 7BU"}
+                title="Promise and Hope office location"
+              />
 
               <div className="mt-8">
                 <h3 className="font-heading text-lg font-semibold">Follow Us</h3>

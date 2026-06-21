@@ -115,11 +115,14 @@ export default async function ProjectDetailPage({ params }: Props) {
               <Card className="sticky top-24 border-primary/20 shadow-lg mb-8">
                 <CardContent className="p-6 space-y-6">
                   <ProgressBar value={progress} />
-                  <div className="flex justify-between text-sm font-medium">
+                  <div className="flex flex-wrap justify-between gap-x-4 gap-y-1 text-sm font-medium">
                     <span className="text-primary">
                       {formatCurrency(project.raisedAmount)} raised
                     </span>
-                    <span className="text-muted-foreground">
+                    <span className="text-accent">
+                      {formatCurrency(Math.max(project.targetAmount - project.raisedAmount, 0))} remaining
+                    </span>
+                    <span className="text-muted-foreground w-full sm:w-auto sm:ml-auto">
                       Goal {formatCurrency(project.targetAmount)}
                     </span>
                   </div>

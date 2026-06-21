@@ -2,14 +2,18 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
+const ORG_EMAIL = "promiseandhope@outlook.com";
+const ORG_PHONE = "+44 7477 860805";
+const ORG_ADDRESS = "47 Findern Green, Sneinton, Nottingham, NG3 7BU";
+
 const IMG = {
   hero: {
-    home: "/images/hero/home-hero.png",
+    home: "/images/hero/home-hero.jpg",
     about: "/images/hero/about-hero.png",
-    services: "/images/hero/services-hero.jpg",
-    projects: "/images/hero/projects-hero.jpg",
-    stories: "/images/hero/stories-hero.jpg",
-    offices: "/images/hero/offices-hero.jpg",
+    services: "/images/hero/services-hero.jpeg",
+    projects: "/images/hero/projects-hero.jpeg",
+    stories: "/images/hero/stories-hero.jpeg",
+    offices: "/images/hero/offices-hero.jpeg",
     gallery: "/images/hero/gallery-hero.jpg",
     contact: "/images/hero/contact-hero.jpg",
     donate: "/images/hero/donate-hero.jpg",
@@ -19,15 +23,23 @@ const IMG = {
   projects: {
     water: "/images/projects/clean-water.jpg",
     education: "/images/projects/education.jpg",
+    education01: "/images/projects/education01.jpg",
+    education_lahore: "/images/projects/education_lahore.jpg",
     food: "/images/projects/food-relief.jpg",
+    food01: "/images/projects/food-relief01.jpg",
     shelter: "/images/projects/shelter.jpg",
     healthcare: "/images/projects/healthcare.jpg",
     community: "/images/projects/community.jpg",
+    ssa: "/images/projects/ssa.jpg",
+    fpl: "/images/projects/community.jpg",
+    efs: "/images/projects/efs.jpg",
+    familyrelief: "/images/projects/familyrelief.jpg",
   },
   stories: {
     family: "/images/stories/family-support.jpg",
     education: "/images/stories/education-hope.jpg",
-    relief: "/images/stories/emergency-relief.jpg",
+    education01: "/images/stories/emergency-relief.jpg",
+    relief: "/images/stories/relief.jpg",
     community: "/images/stories/community-garden.jpg",
     healthcare: "/images/stories/healthcare-access.jpg",
     shelter: "/images/stories/shelter-warmth.jpg",
@@ -39,9 +51,9 @@ const IMG = {
     event2: "/images/gallery/event-2.jpg",
     relief1: "/images/gallery/relief-1.jpg",
     relief2: "/images/gallery/relief-2.jpg",
-    volunteer1: "/images/gallery/volunteer-1.jpg",
-    volunteer2: "/images/gallery/volunteer-2.jpg",
-    volunteer3: "/images/gallery/volunteer-3.jpg",
+    volunteer1: "/images/gallery/volunteer-1.jpeg",
+    volunteer2: "/images/gallery/volunteer-2.jpeg",
+    volunteer3: "/images/gallery/volunteer-3.jpeg",
   },
   team: {
     director: "/images/team/director.jpg",
@@ -81,24 +93,33 @@ async function main() {
     data: [
       { key: "org.name", value: "Promise and Hope" },
       { key: "org.tagline", value: "Faith in Action. Hope in Every Heart." },
-      { key: "org.summary", value: "A faith-inspired charity committed to serving vulnerable communities through compassion, practical support, and lasting change." },
-      { key: "org.email", value: "info@promiseandhope.org" },
-      { key: "org.phone", value: "+44 20 7946 0958" },
-      { key: "org.address", value: "Promise and Hope House, 42 Hope Street, London, EC2A 4NE" },
+      { key: "org.summary", value: "A faith-inspired charity serving families in Lahore and Sheikhupura through school support, food relief, and compassionate practical help." },
+      { key: "org.email", value: ORG_EMAIL },
+      { key: "org.phone", value: ORG_PHONE },
+      { key: "org.address", value: ORG_ADDRESS },
       { key: "org.charity_number", value: "1234567" },
       { key: "donation.suggested_amounts", value: JSON.stringify([10, 25, 50, 100, 250]) },
       { key: "home.hero.title", value: "Restoring Hope. Transforming Lives." },
-      { key: "home.hero.description", value: "Promise and Hope is a faith-inspired charity committed to serving vulnerable communities through compassion, practical support, and lasting change." },
+      { key: "home.hero.description", value: "Promise and Hope is a faith-inspired charity helping children stay in school and supporting families with food relief in Lahore and Sheikhupura." },
       { key: "home.hero.trust_line", value: "Every act of kindness creates a brighter tomorrow." },
       { key: "home.mission.title", value: "Serving with Faith, Compassion and Purpose" },
-      { key: "home.mission.description", value: "Promise and Hope exists to bring practical help and renewed hope to people facing hardship, guided by values of faith, mercy, dignity and service." },
+      { key: "home.mission.description", value: "Promise and Hope serves families in Lahore and Sheikhupura with school support and food relief, guided by faith, mercy, dignity, and service." },
       { key: "donation.cta.title", value: "Your Giving Can Become Someone's Answered Prayer" },
-      { key: "donation.cta.description", value: "Every donation, no matter the size, helps us bring food, shelter, education, and hope to families who need it most." },
+      { key: "donation.cta.description", value: "Every donation, no matter the size, helps us provide school support, food parcels, and hope to families who need it most." },
       { key: "about.story.title", value: "A Journey of Faith and Service" },
-      { key: "about.story.description", value: "What began as a small group of volunteers sharing food parcels has grown into a charity touching thousands of lives across the UK and beyond." },
-      { key: "about.story.body", value: "Promise and Hope exists to bring practical help and renewed hope to people facing hardship." },
-      { key: "about.mission", value: "To serve vulnerable communities with compassion and practical support, restoring dignity and hope through faith-inspired action." },
-      { key: "about.vision", value: "A world where every person facing hardship encounters kindness, receives practical help, and discovers renewed hope for tomorrow." },
+      { key: "about.story.description", value: "From a small community initiative in 2015 to a growing charity serving Lahore and Sheikhupura today." },
+      {
+        key: "about.story.paragraph1",
+        value:
+          "At Promise and Hope, we believe every child deserves the chance to learn. Many families in Lahore and Sheikhupura struggle to afford school fees, uniforms, books, and basic supplies — and without support, children can fall behind or leave education altogether. Through our school support projects, we walk alongside parents who want better futures for their children, providing practical help that keeps young people in the classroom and opens doors to learning, confidence, and opportunity. Our work is rooted in compassion and faith, and every child we support reminds us that small acts of kindness can change a life.",
+      },
+      {
+        key: "about.story.paragraph2",
+        value:
+          "Alongside education, we serve families facing hunger and sudden hardship. During the COVID pandemic, we distributed food in Lahore and Sheikhupura to households who had lost income and could not afford daily meals. Today, our food relief and family support programmes continue to offer emergency food parcels, practical assistance, and a message of dignity and hope to vulnerable families. Promise and Hope is expanding its current projects and needs your donations to continue existing work and to support future projects — so that no family has to face hardship alone, and every gift of generosity becomes a promise kept.",
+      },
+      { key: "about.mission", value: "To serve vulnerable families in Lahore and Sheikhupura with school support and food relief, restoring dignity and hope through faith-inspired action." },
+      { key: "about.vision", value: "Communities where children can learn without barriers and families facing hardship receive practical help, compassion, and renewed hope." },
     ],
   });
 
@@ -108,7 +129,7 @@ async function main() {
     { pageKey: "services", title: "Our Services", description: "Compassionate, practical support.", imageUrl: IMG.hero.services, imageAlt: "Charity services" },
     { pageKey: "projects", title: "Our Projects", description: "Every project is a promise kept.", imageUrl: IMG.hero.projects, imageAlt: "Charity projects" },
     { pageKey: "case-stories", title: "Case Stories", description: "Stories of resilience and hope.", imageUrl: IMG.hero.stories, imageAlt: "Impact stories" },
-    { pageKey: "regional-offices", title: "Regional Offices", description: "Our network of offices.", imageUrl: IMG.hero.offices, imageAlt: "Regional offices" },
+    { pageKey: "regional-offices", title: "Regional Offices", description: "Our offices in Lahore and Sheikhupura.", imageUrl: IMG.hero.offices, imageAlt: "Regional offices" },
     { pageKey: "gallery", title: "Gallery", description: "Moments of hope and service.", imageUrl: IMG.hero.gallery, imageAlt: "Gallery" },
     { pageKey: "contact", title: "Contact Us", description: "We would love to hear from you.", imageUrl: IMG.hero.contact, imageAlt: "Contact" },
     { pageKey: "donate", title: "Give Hope Today", description: "Your generosity provides food, education, and hope.", imageUrl: IMG.hero.donate, imageAlt: "Donate" },
@@ -151,7 +172,7 @@ async function main() {
       { slug: "most-needed", label: "Where Most Needed", sortOrder: 0 },
       { slug: "food-relief", label: "Food Relief", sortOrder: 1 },
       { slug: "education", label: "Education Support", sortOrder: 2 },
-      { slug: "healthcare", label: "Healthcare Assistance", sortOrder: 3 },
+      { slug: "humanitarian", label: "Humanitarian Assistance", sortOrder: 3 },
       { slug: "emergency", label: "Emergency Appeal", sortOrder: 4 },
       { slug: "orphan-family", label: "Orphan and Family Support", sortOrder: 5 },
     ].map((c) => prisma.donationCause.create({ data: c }))
@@ -161,42 +182,62 @@ async function main() {
     data: [
       { slug: "food-essential-supplies", title: "Food and Essential Supplies", shortDescription: "Providing nutritious meals and essential household items to families facing hardship.", description: "Our food and essential supplies programme delivers dignity to households experiencing food insecurity.", iconName: "Package", imageUrl: IMG.projects.food, sortOrder: 0, showOnHome: true, homeTitle: "Food & Essential Aid", homeDescription: "Nourishing meals and essentials for families in need.", homeIconName: "Apple" },
       { slug: "education-child-welfare", title: "Education and Child Welfare", shortDescription: "Supporting children with school supplies, tutoring, and safe learning environments.", description: "We believe every child deserves the opportunity to learn and thrive.", iconName: "BookOpen", imageUrl: IMG.projects.education, sortOrder: 1, showOnHome: true, homeTitle: "Education Support", homeDescription: "Helping children learn, grow, and dream without limits.", homeIconName: "BookOpen" },
-      { slug: "healthcare-support", title: "Healthcare Support", shortDescription: "Connecting communities with medical care, health education, and wellness resources.", description: "Access to healthcare should never be a privilege.", iconName: "HeartPulse", imageUrl: IMG.projects.healthcare, sortOrder: 2, showOnHome: true, homeTitle: "Healthcare Assistance", homeDescription: "Medical care and wellness for underserved communities.", homeIconName: "HeartPulse" },
-      { slug: "emergency-disaster-relief", title: "Emergency Disaster Relief", shortDescription: "Rapid response when disaster strikes.", description: "When crisis hits, Promise and Hope responds quickly.", iconName: "ShieldAlert", imageUrl: IMG.stories.relief, sortOrder: 3, showOnHome: true, homeTitle: "Emergency Relief", homeDescription: "Rapid, compassionate response when crisis strikes.", homeIconName: "ShieldAlert" },
-      { slug: "shelter-rehabilitation", title: "Shelter and Rehabilitation", shortDescription: "Safe housing, warmth, and pathways to stability.", description: "Everyone deserves a safe place to rest.", iconName: "Home", imageUrl: IMG.projects.shelter, sortOrder: 4 },
-      { slug: "spiritual-community-support", title: "Spiritual and Community Support", shortDescription: "Pastoral care, fellowship, and community programmes.", description: "Faith inspires our service, and community sustains it.", iconName: "Church", imageUrl: IMG.stories.community, sortOrder: 5, showOnHome: true, homeTitle: "Community Development", homeDescription: "Building stronger, self-sustaining communities together.", homeIconName: "Church" },
+      { slug: "humanitarian-assistance", title: "Humanitarian Assistance", shortDescription: "Practical support for families facing hardship, delivered with dignity and compassion.", description: "When families struggle with daily essentials, we respond with practical humanitarian assistance rooted in faith and mercy.", iconName: "HandHeart", imageUrl: IMG.projects.community, sortOrder: 2, showOnHome: true, homeTitle: "Humanitarian Assistance", homeDescription: "Practical help for families facing hardship, offered with dignity.", homeIconName: "HandHeart" },
+      { slug: "emergency-disaster-relief", title: "Emergency Food Support", shortDescription: "Emergency food parcels for families facing sudden crisis.", description: "When crisis leaves families without food, Promise and Hope responds quickly with emergency food support.", iconName: "ShieldAlert", imageUrl: IMG.stories.relief, sortOrder: 3, showOnHome: true, homeTitle: "Emergency Food Support", homeDescription: "Rapid food relief when families face sudden hardship.", homeIconName: "ShieldAlert" },
+      { slug: "family-relief", title: "Family Relief", shortDescription: "Supporting households with essentials during difficult seasons.", description: "We stand with families through seasons of loss, unemployment, and uncertainty with practical relief.", iconName: "Home", imageUrl: IMG.projects.shelter, sortOrder: 4, showOnHome: true, homeTitle: "Family Relief", homeDescription: "Standing with families through difficult seasons.", homeIconName: "Home" },
     ],
   });
 
   await prisma.project.createMany({
     data: [
-      { slug: "clean-water-rural-families", title: "Clean Water for Rural Families", location: "East Africa", category: "Community Development", shortDescription: "Bringing safe, clean drinking water to remote villages.", description: "In rural communities across East Africa, families spend hours each day collecting water from unsafe sources.", goals: JSON.stringify(["Install 5 deep-water wells", "Provide water purification training", "Establish maintenance committees"]), expectedImpact: "Reduced waterborne illness and healthier families.", imageUrl: IMG.projects.water, targetAmount: 75000, raisedAmount: 48200, featured: true, sortOrder: 0 },
-      { slug: "education-for-every-child", title: "Education for Every Child", location: "South Asia", category: "Education", shortDescription: "School supplies and learning support for children.", description: "Education opens doors to a brighter future.", goals: JSON.stringify(["Support 500 children with school kits", "Fund after-school tutoring", "Train 30 volunteer teachers"]), expectedImpact: "Higher school attendance and improved literacy.", imageUrl: IMG.projects.education, targetAmount: 50000, raisedAmount: 31500, featured: true, sortOrder: 1 },
-      { slug: "emergency-food-relief", title: "Emergency Food Relief", location: "United Kingdom", category: "Food Support", shortDescription: "Emergency food parcels for families facing sudden hardship.", description: "When families face unexpected crisis, our emergency food relief programme provides immediate support.", goals: JSON.stringify(["Distribute 5,000 food parcels", "Serve 10,000 community meals", "Partner with 20 food banks"]), expectedImpact: "Families fed during their hardest moments.", imageUrl: IMG.projects.food, targetAmount: 40000, raisedAmount: 28750, featured: true, sortOrder: 2 },
-      { slug: "shelter-warmth-appeal", title: "Shelter and Warmth Appeal", location: "United Kingdom", category: "Emergency Relief", shortDescription: "Winter coats, blankets, and emergency shelter.", description: "No one should face winter without warmth.", goals: JSON.stringify(["Provide 1,000 winter warmth packs", "Fund 50 nights of emergency shelter", "Support heating costs for 200 households"]), expectedImpact: "Lives protected during harsh winters.", imageUrl: IMG.projects.shelter, targetAmount: 60000, raisedAmount: 42100, featured: true, sortOrder: 3 },
-      { slug: "mobile-health-clinic", title: "Mobile Health Clinic", location: "East Africa", category: "Healthcare", shortDescription: "A mobile clinic bringing essential healthcare to remote communities.", description: "Remote villages often lack access to basic healthcare.", goals: JSON.stringify(["Operate clinic for 12 months", "Serve 3,000 patients", "Train 20 health volunteers"]), expectedImpact: "Earlier diagnosis and healthier communities.", imageUrl: IMG.projects.healthcare, targetAmount: 85000, raisedAmount: 53800, sortOrder: 4 },
-      { slug: "community-garden-initiative", title: "Community Garden Initiative", location: "Birmingham, UK", category: "Community Development", shortDescription: "Transforming unused land into community gardens.", description: "Community gardens nourish both body and spirit.", goals: JSON.stringify(["Establish 3 community gardens", "Engage 150 families", "Run monthly harvest events"]), expectedImpact: "Food security and community cohesion.", imageUrl: IMG.projects.community, targetAmount: 25000, raisedAmount: 18900, sortOrder: 5 },
+      { slug: "school-support-lahore", title: "School Support Project — Lahore", location: "Lahore, Pakistan", category: "Education", shortDescription: "School fees, uniforms, and learning materials for children in Lahore.", description: "Many families in Lahore cannot afford the basic costs of keeping their children in school. This project provides school fees, uniforms, books, and supplies so that children can continue learning with dignity.", goals: JSON.stringify(["Support 40 children with school fees", "Provide uniforms and books for the academic year", "Visit families to assess ongoing educational needs"]), expectedImpact: "Children remain in school and families gain relief from educational costs.", imageUrl: IMG.projects.education, targetAmount: 7500, raisedAmount: 4100, featured: true, sortOrder: 0 },
+      { slug: "school-support-sheikhupura", title: "School Support Project — Sheikhupura", location: "Sheikhupura, Pakistan", category: "Education", shortDescription: "Helping children in Sheikhupura stay in school with practical support.", description: "In Sheikhupura, Promise and Hope supports children whose families cannot cover school expenses. We provide targeted assistance so that learning is not interrupted by poverty.", goals: JSON.stringify(["Support 30 children with school supplies", "Cover partial school fees for vulnerable households", "Coordinate with local schools to identify need"]), expectedImpact: "More children attending school regularly with the materials they need.", imageUrl: IMG.projects.education01, targetAmount: 6000, raisedAmount: 2750, featured: true, sortOrder: 1 },
+      { slug: "covid-food-lahore", title: "Food Distribution During COVID — Lahore", location: "Lahore, Pakistan", category: "Food Support", shortDescription: "Emergency food parcels for families affected by COVID in Lahore.", description: "During the COVID pandemic, many households in Lahore lost income overnight. Promise and Hope distributed food parcels to families who could not afford daily meals, offering practical relief and hope in a difficult season.", goals: JSON.stringify(["Distribute monthly food parcels to 50 families", "Prioritise households with children and elderly members", "Coordinate with local volunteers for delivery"]), expectedImpact: "Families fed during lockdowns and economic hardship.", imageUrl: IMG.projects.food, targetAmount: 5000, raisedAmount: 3200, featured: true, sortOrder: 2 },
+      { slug: "covid-food-sheikhupura", title: "Food Distribution During COVID — Sheikhupura", location: "Sheikhupura, Pakistan", category: "Food Support", shortDescription: "Food relief for vulnerable families in Sheikhupura during COVID.", description: "When COVID disrupted livelihoods in Sheikhupura, Promise and Hope responded with food distribution to families facing hunger. This project reflects our commitment to standing with communities in their hardest moments.", goals: JSON.stringify(["Provide food parcels to 35 families", "Support widows and daily-wage workers", "Continue periodic distributions as needs arise"]), expectedImpact: "Vulnerable families received food when they needed it most.", imageUrl: IMG.projects.food01, targetAmount: 4500, raisedAmount: 2100, featured: true, sortOrder: 3 },
+      { slug: "education-support-lahore", title: "Education Support — Lahore", location: "Lahore, Pakistan", category: "Education", shortDescription: "Tutoring and learning support for children falling behind in school.", description: "Some children need extra help to keep up with their studies. This modest programme offers tutoring support and encouragement for pupils whose families cannot afford private tuition.", goals: JSON.stringify(["Support 20 children with tutoring materials", "Run monthly learning check-ins", "Encourage regular school attendance"]), expectedImpact: "Children gain confidence and improve their learning outcomes.", imageUrl: IMG.projects.education_lahore, targetAmount: 4000, raisedAmount: 1200, sortOrder: 4 },
+      { slug: "school-supplies-sheikhupura", title: "School Supplies Appeal — Sheikhupura", location: "Sheikhupura, Pakistan", category: "Education", shortDescription: "Books, bags, and stationery for children starting the school year.", description: "At the start of each term, many families struggle to buy basic school supplies. This appeal provides books, bags, and stationery so children can begin the year ready to learn.", goals: JSON.stringify(["Provide supply packs for 25 children", "Include notebooks, pens, and school bags", "Distribute before the new term begins"]), expectedImpact: "Children start school equipped with the essentials they need.", imageUrl: IMG.projects.ssa, targetAmount: 3500, raisedAmount: 1800, sortOrder: 5 },
+      { slug: "food-parcels-lahore", title: "Food Parcels for Families — Lahore", location: "Lahore, Pakistan", category: "Food Support", shortDescription: "Monthly food parcels for households facing ongoing hardship.", description: "For families who continue to struggle with food insecurity, this project provides monthly parcels of essential groceries — a simple but vital source of stability and dignity.", goals: JSON.stringify(["Support 20 families with monthly food parcels", "Include rice, flour, oil, and basic staples", "Review needs every three months"]), expectedImpact: "Families receive consistent food support through difficult seasons.", imageUrl: IMG.projects.fpl, targetAmount: 5500, raisedAmount: 3900, sortOrder: 6 },
+      { slug: "family-relief-sheikhupura", title: "Family Relief Fund — Sheikhupura", location: "Sheikhupura, Pakistan", category: "Family Relief", shortDescription: "Essential support for households facing sudden loss or hardship.", description: "When a family faces bereavement, job loss, or unexpected crisis, this fund provides modest practical help — groceries, basic essentials, and compassionate support.", goals: JSON.stringify(["Assist 15 families facing sudden hardship", "Provide essentials within one week of referral", "Follow up with pastoral and practical care"]), expectedImpact: "Families receive timely help when crisis strikes.", imageUrl: IMG.projects.familyrelief, targetAmount: 3000, raisedAmount: 950, sortOrder: 7 },
+      { slug: "emergency-food-lahore", title: "Emergency Food Support — Lahore", location: "Lahore, Pakistan", category: "Emergency Relief", shortDescription: "Rapid food support for families in urgent need.", description: "When hunger becomes immediate, this emergency fund allows Promise and Hope to respond quickly with food parcels for families referred by volunteers and local contacts.", goals: JSON.stringify(["Respond to urgent referrals within 48 hours", "Provide food parcels to 25 households", "Maintain a small reserve for unexpected need"]), expectedImpact: "Urgent food needs met quickly with compassion and discretion.", imageUrl: IMG.projects.efs, targetAmount: 8000, raisedAmount: 4600, sortOrder: 8 },
     ],
   });
 
   await prisma.caseStory.createMany({
     data: [
-      { slug: "a-family-finds-stability", title: "A Family Finds Stability After Hardship", location: "Birmingham, UK", category: "Family Support", excerpt: "When unexpected hardship left the Ahmed family without essentials, compassionate support helped them rebuild.", content: JSON.stringify(["The Ahmed family had always worked hard to provide for their three children.", "Through Promise and Hope's family support programme, they received food parcels and school supplies.", "Today, both parents are back on their feet."]), impactSummary: "A family restored to stability and hope renewed.", imageUrl: IMG.stories.family, featured: true, sortOrder: 0 },
-      { slug: "learning-opens-new-doors", title: "Learning Opens New Doors", location: "South Asia", category: "Education", excerpt: "With school supplies and tutoring support, Priya discovered a love for learning.", content: JSON.stringify(["Priya's family could not afford the books and uniform she needed.", "Our education programme provided everything she needed to return to class.", "Priya now dreams of becoming a teacher."]), impactSummary: "One child returned to education; a future teacher inspired.", imageUrl: IMG.stories.education, featured: true, sortOrder: 1 },
-      { slug: "hope-arrives-after-the-storm", title: "Hope Arrives After the Storm", location: "East Africa", category: "Emergency Relief", excerpt: "When flooding destroyed homes and crops, rapid relief brought food, shelter, and promise.", content: JSON.stringify(["Heavy rains brought floods that swept through villages overnight.", "Promise and Hope's emergency team arrived within days with supplies.", "Months later, families are rebuilding stronger homes."]), impactSummary: "Immediate relief followed by sustained recovery support.", imageUrl: IMG.stories.relief, featured: true, sortOrder: 2 },
-      { slug: "community-grows-together", title: "A Community Grows Together", location: "Manchester, UK", category: "Community", excerpt: "A vacant lot became a garden where neighbours share harvests and belonging.", content: JSON.stringify(["For years, an empty plot attracted litter and neglect.", "Our team partnered with families to transform the space into a thriving garden.", "The garden now feeds dozens of families."]), impactSummary: "Green space created and a neighbourhood strengthened.", imageUrl: IMG.stories.community, sortOrder: 3 },
-      { slug: "healthcare-reaches-a-village", title: "Healthcare Reaches a Remote Village", location: "East Africa", category: "Healthcare", excerpt: "A mobile clinic brought check-ups and vaccinations to families who had never seen a doctor.", content: JSON.stringify(["In a remote village, the nearest clinic was a day's journey away.", "Our mobile health clinic visited monthly.", "Infant mortality has decreased."]), impactSummary: "Healthcare access established and lives saved.", imageUrl: IMG.stories.healthcare, sortOrder: 4 },
-      { slug: "warmth-in-the-coldest-month", title: "Warmth in the Coldest Month", location: "London, UK", category: "Family Support", excerpt: "Winter warmth packs and emergency shelter gave James a safe place to begin again.", content: JSON.stringify(["James had lost his job and his flat within the same difficult month.", "He received a warm coat, blankets, and transitional housing.", "With support, James found employment within three months."]), impactSummary: "Emergency shelter and pathways to employment.", imageUrl: IMG.stories.shelter, sortOrder: 5 },
+      { slug: "school-support-changes-a-family", title: "School Support Changes a Family's Year", location: "Lahore, Pakistan", category: "Education", excerpt: "When school fees became impossible to pay, Promise and Hope helped keep two children in the classroom.", content: JSON.stringify(["The Khan family had always prioritised education, but lost income made school fees impossible.", "Through our Lahore school support project, both children received fees and uniforms for the year.", "Their mother said it was the first time in months she could sleep without worry about school."]), impactSummary: "Two children remained in school; a family restored to hope.", imageUrl: IMG.stories.education, featured: true, sortOrder: 0 },
+      { slug: "books-and-hope-in-sheikhupura", title: "Books and Hope in Sheikhupura", location: "Sheikhupura, Pakistan", category: "Education", excerpt: "School supplies helped Ayesha return to class with confidence.", content: JSON.stringify(["Ayesha had missed weeks of school because her family could not afford books and a bag.", "Our Sheikhupura school support team provided everything she needed before the new term.", "Ayesha is back in class and doing well — she hopes to become a teacher one day."]), impactSummary: "One child returned to education with dignity and renewed confidence.", imageUrl: IMG.stories.education01, featured: true, sortOrder: 1 },
+      { slug: "food-parcels-during-covid", title: "Food Parcels When Income Disappeared", location: "Lahore, Pakistan", category: "Food Relief", excerpt: "During COVID lockdowns, food parcels brought relief to a household with no income.", content: JSON.stringify(["When lockdowns stopped daily wage work, the Rashid family had no savings and no food.", "Promise and Hope delivered monthly food parcels through our COVID distribution in Lahore.", "The family shared that the parcels were an answer to prayer in their hardest season."]), impactSummary: "A family fed through lockdown; dignity preserved in crisis.", imageUrl: IMG.stories.relief, featured: true, sortOrder: 2 },
+      { slug: "family-relief-in-sheikhupura", title: "Family Relief in a Difficult Season", location: "Sheikhupura, Pakistan", category: "Family Support", excerpt: "After sudden bereavement, practical support helped a widow care for her children.", content: JSON.stringify(["When a father passed away, his widow was left caring for three young children alone.", "Our family relief fund provided groceries and essentials within days of referral.", "The family received not only food, but the compassion of volunteers who prayed with them."]), impactSummary: "Timely relief for a grieving family; hope renewed through community care.", imageUrl: IMG.stories.family, sortOrder: 3 },
     ],
   });
 
   await prisma.regionalOffice.createMany({
     data: [
-      { slug: "london", name: "London Head Office", region: "United Kingdom", address: "Promise and Hope House, 42 Hope Street, London, EC2A 4NE", phone: "+44 20 7946 0958", email: "london@promiseandhope.org", hours: "Monday – Friday: 9:00 AM – 5:30 PM", imageUrl: IMG.offices.london, mapUrl: "https://maps.google.com/?q=London+EC2A", isHeadOffice: true, sortOrder: 0 },
-      { slug: "birmingham", name: "Birmingham Regional Office", region: "United Kingdom", address: "12 Compassion Way, Birmingham, B1 2AA", phone: "+44 121 496 0823", email: "birmingham@promiseandhope.org", hours: "Monday – Friday: 9:00 AM – 5:00 PM", imageUrl: IMG.offices.birmingham, mapUrl: "https://maps.google.com/?q=Birmingham+B1", sortOrder: 1 },
-      { slug: "manchester", name: "Manchester Regional Office", region: "United Kingdom", address: "8 Community Lane, Manchester, M1 4BT", phone: "+44 161 496 0734", email: "manchester@promiseandhope.org", hours: "Monday – Friday: 9:00 AM – 5:00 PM", imageUrl: IMG.offices.manchester, mapUrl: "https://maps.google.com/?q=Manchester+M1", sortOrder: 2 },
-      { slug: "east-africa", name: "East Africa Office", region: "East Africa", address: "Promise and Hope Centre, Nairobi, Kenya", phone: "+254 20 123 4567", email: "eastafrica@promiseandhope.org", hours: "Monday – Friday: 8:00 AM – 4:30 PM (EAT)", imageUrl: IMG.offices.eastAfrica, mapUrl: "https://maps.google.com/?q=Nairobi+Kenya", sortOrder: 3 },
-      { slug: "south-asia", name: "South Asia Office", region: "South Asia", address: "Hope Foundation Building, Lahore, Pakistan", phone: "+92 42 123 4567", email: "southasia@promiseandhope.org", hours: "Monday – Friday: 9:00 AM – 5:00 PM (PKT)", imageUrl: IMG.offices.southAsia, mapUrl: "https://maps.google.com/?q=Lahore+Pakistan", sortOrder: 4 },
+      {
+        slug: "lahore",
+        name: "Lahore Programme Office",
+        region: "Punjab, Pakistan",
+        address: "Promise and Hope Office, Gulberg III, Lahore, Pakistan",
+        phone: ORG_PHONE,
+        email: ORG_EMAIL,
+        hours: "Monday – Friday: 9:00 AM – 5:00 PM (PKT)",
+        imageUrl: IMG.offices.southAsia,
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Gulberg+III+Lahore+Pakistan",
+        isHeadOffice: true,
+        sortOrder: 0,
+      },
+      {
+        slug: "sheikhupura",
+        name: "Sheikhupura Programme Office",
+        region: "Punjab, Pakistan",
+        address: "Promise and Hope Centre, Civil Lines, Sheikhupura, Pakistan",
+        phone: ORG_PHONE,
+        email: ORG_EMAIL,
+        hours: "Monday – Friday: 9:00 AM – 4:30 PM (PKT)",
+        imageUrl: IMG.offices.southAsia,
+        mapUrl: "https://www.google.com/maps/search/?api=1&query=Sheikhupura+Pakistan",
+        sortOrder: 1,
+      },
     ],
   });
 
@@ -206,8 +247,8 @@ async function main() {
       { title: "Neighbourhood Support Programme", category: "Community Work", imageUrl: IMG.gallery.community2, alt: "Families at community centre", sortOrder: 1 },
       { title: "Annual Hope Gala", category: "Events", imageUrl: IMG.gallery.event1, alt: "Annual charity gala", sortOrder: 2 },
       { title: "Volunteer Appreciation Evening", category: "Events", imageUrl: IMG.gallery.event2, alt: "Volunteer appreciation event", sortOrder: 3 },
-      { title: "Emergency Food Distribution", category: "Relief Projects", imageUrl: IMG.gallery.relief1, alt: "Food parcels for distribution", sortOrder: 4 },
-      { title: "Winter Warmth Appeal", category: "Relief Projects", imageUrl: IMG.gallery.relief2, alt: "Winter clothing and blankets", sortOrder: 5 },
+      { title: "School Support Day", category: "Relief Projects", imageUrl: IMG.gallery.relief1, alt: "School supplies for distribution", sortOrder: 4 },
+      { title: "Food Parcel Distribution", category: "Relief Projects", imageUrl: IMG.gallery.relief2, alt: "Food parcels for families", sortOrder: 5 },
       { title: "Dedicated Volunteers", category: "Volunteers", imageUrl: IMG.gallery.volunteer1, alt: "Volunteers at community project", sortOrder: 6 },
       { title: "Youth Volunteer Programme", category: "Volunteers", imageUrl: IMG.gallery.volunteer2, alt: "Young volunteers", sortOrder: 7 },
       { title: "Team Serving Together", category: "Volunteers", imageUrl: IMG.gallery.volunteer3, alt: "Volunteer team", sortOrder: 8 },
@@ -216,19 +257,18 @@ async function main() {
 
   await prisma.testimonial.createMany({
     data: [
-      { name: "Margaret T.", role: "Monthly Supporter", quote: "Giving to Promise and Hope has become part of my faith journey. I know my donations reach real families with real needs.", sortOrder: 0 },
-      { name: "David & Sarah K.", role: "Legacy Donors", quote: "We chose Promise and Hope because of their transparency and compassion.", sortOrder: 1 },
-      { name: "Reverend James O.", role: "Community Partner", quote: "Working alongside Promise and Hope has strengthened our parish outreach.", sortOrder: 2 },
-      { name: "Amelia R.", role: "Volunteer", quote: "Volunteering here reminded me why hope matters.", sortOrder: 3 },
+      { name: "Amira H.", role: "Monthly Supporter", quote: "Knowing my small monthly gift helps children stay in school gives my giving real meaning.", sortOrder: 0 },
+      { name: "Thomas & Helen W.", role: "Supporters", quote: "We appreciate how transparent Promise and Hope is about where donations go.", sortOrder: 1 },
+      { name: "Reverend Samuel K.", role: "Community Partner", quote: "This is faithful, practical charity — education and food relief offered with compassion.", sortOrder: 2 },
     ],
   });
 
   await prisma.impactStat.createMany({
     data: [
-      { value: 10000, suffix: "+", label: "Lives Supported", sortOrder: 0 },
-      { value: 45, suffix: "+", label: "Community Projects", sortOrder: 1 },
-      { value: 12, suffix: "", label: "Regional Offices", sortOrder: 2 },
-      { value: 5000, suffix: "+", label: "Generous Donors", sortOrder: 3 },
+      { value: 1200, suffix: "+", label: "Lives Saved", sortOrder: 0 },
+      { value: 5, suffix: "+", label: "Community Projects", sortOrder: 1 },
+      { value: 2, suffix: "", label: "Regional Offices", sortOrder: 2 },
+      { value: 50, suffix: "+", label: "Generous Donors", sortOrder: 3 },
     ],
   });
 
@@ -244,20 +284,18 @@ async function main() {
 
   await prisma.timelineEvent.createMany({
     data: [
-      { year: "2008", title: "A Seed of Compassion", description: "Promise and Hope began as volunteers distributing food parcels.", sortOrder: 0 },
-      { year: "2012", title: "Formal Registration", description: "Registered as a charity, expanding education and healthcare.", sortOrder: 1 },
-      { year: "2016", title: "International Expansion", description: "Regional offices opened in East Africa and South Asia.", sortOrder: 2 },
-      { year: "2020", title: "Emergency Response Growth", description: "Emergency relief scaled to serve thousands in urgent need.", sortOrder: 3 },
-      { year: "2024", title: "A Vision for Tomorrow", description: "Supporting 10,000+ lives annually across 12 regional offices.", sortOrder: 4 },
+      { year: "2015", title: "A Small Community Initiative", description: "Promise and Hope began as a small community initiative serving families in need.", sortOrder: 0 },
+      { year: "2017", title: "Education Support Begins", description: "Started supporting children with school supplies and education assistance.", sortOrder: 1 },
+      { year: "2020", title: "COVID Food Distribution", description: "Provided food distribution during COVID in Lahore and Sheikhupura.", sortOrder: 2 },
+      { year: "2023", title: "Expanded Relief Work", description: "Expanded food relief and family support for vulnerable households.", sortOrder: 3 },
+      { year: "2026", title: "Growing With Donor Support", description: "Continuing to grow education and food relief projects with donor support.", sortOrder: 4 },
     ],
   });
 
   await prisma.teamMember.createMany({
     data: [
-      { name: "Reverend David Thompson", role: "Founder & Director", bio: "Leading Promise and Hope with over 25 years of service.", imageUrl: IMG.team.director, sortOrder: 0 },
-      { name: "Sarah Mitchell", role: "Director of Operations", bio: "Ensuring programmes run efficiently.", imageUrl: IMG.team.operations, sortOrder: 1 },
-      { name: "James Okonkwo", role: "Head of Programmes", bio: "Designing community projects across the UK and abroad.", imageUrl: IMG.team.programs, sortOrder: 2 },
-      { name: "Fatima Hassan", role: "Partnerships Manager", bio: "Building relationships with churches and businesses.", imageUrl: IMG.team.partnerships, sortOrder: 3 },
+      { name: "Reverend David Thompson", role: "Founder & Director", bio: "Leading Promise and Hope with a heart for education and compassionate service in Lahore and Sheikhupura.", imageUrl: IMG.team.director, sortOrder: 0 },
+      { name: "Fatima Hassan", role: "Programmes Coordinator", bio: "Coordinating school support and food relief projects with local volunteers and families.", imageUrl: IMG.team.partnerships, sortOrder: 1 },
     ],
   });
 
