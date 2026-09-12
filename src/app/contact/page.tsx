@@ -23,12 +23,13 @@ const socialLinks = [
 export default async function ContactPage() {
   const [hero, settings] = await Promise.all([
     getPageHero("contact"),
-    getSiteSettings(["org.email", "org.phone", "org.address"]),
+    getSiteSettings(["org.email", "org.phone", "org.landline", "org.address"]),
   ]);
 
   const contactInfo = [
     { icon: Mail, title: "Email", value: settings["org.email"], href: `mailto:${settings["org.email"]}` },
-    { icon: Phone, title: "Phone", value: settings["org.phone"], href: `tel:${settings["org.phone"]?.replace(/\s/g, "")}` },
+    { icon: Phone, title: "Mobile", value: settings["org.phone"], href: `tel:${settings["org.phone"]?.replace(/\s/g, "")}` },
+    { icon: Phone, title: "Landline", value: settings["org.landline"], href: `tel:${settings["org.landline"]?.replace(/\s/g, "")}` },
     { icon: MapPin, title: "Registered Office", value: settings["org.address"] },
     { icon: Clock, title: "Opening Hours", value: "Monday – Friday: 9:00 AM – 5:30 PM" },
   ];
@@ -44,7 +45,7 @@ export default async function ContactPage() {
 
       <section className="py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4 mb-16">
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 mb-16">
             {contactInfo.map(({ icon: Icon, title, value, href }) => (
               <Card key={title}>
                 <CardContent className="p-6">

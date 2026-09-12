@@ -25,8 +25,9 @@ export async function Footer({ quickLinks, usefulLinks }: FooterProps) {
     "org.summary",
     "org.email",
     "org.phone",
+    "org.landline",
     "org.address",
-    "org.charity_number",
+    "org.crn",
   ]);
 
   const orgName = settings["org.name"] ?? "Promise and Hope";
@@ -109,6 +110,14 @@ export async function Footer({ quickLinks, usefulLinks }: FooterProps) {
                   </a>
                 </li>
               )}
+              {settings["org.landline"] && (
+                <li className="flex gap-2">
+                  <Phone className="h-4 w-4 shrink-0 text-accent" aria-hidden />
+                  <a href={`tel:${settings["org.landline"].replace(/\s/g, "")}`} className="hover:text-accent transition-colors">
+                    {settings["org.landline"]} <span className="text-primary-foreground/60">(landline)</span>
+                  </a>
+                </li>
+              )}
               {settings["org.email"] && (
                 <li className="flex gap-2">
                   <Mail className="h-4 w-4 shrink-0 text-accent" aria-hidden />
@@ -142,8 +151,8 @@ export async function Footer({ quickLinks, usefulLinks }: FooterProps) {
             ))}
           </div>
           <p className="text-center text-xs text-primary-foreground/60">
-            {settings["org.charity_number"] && (
-              <>Registered Charity No. {settings["org.charity_number"]} · </>
+            {settings["org.crn"] && (
+              <>CRN {settings["org.crn"]} · </>
             )}
             © {new Date().getFullYear()} {orgName}. All rights reserved.
           </p>

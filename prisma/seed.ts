@@ -3,7 +3,9 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 const ORG_EMAIL = "promiseandhope@outlook.com";
-const ORG_PHONE = "+44 7477 860805";
+const ORG_PHONE = "+44 7846 704670";
+const ORG_LANDLINE = "+44 115 924 917";
+const ORG_CRN = "16654153";
 const ORG_ADDRESS = "47 Findern Green, Sneinton, Nottingham, NG3 7BU";
 
 const IMG = {
@@ -45,6 +47,10 @@ const IMG = {
     shelter: "/images/stories/shelter-warmth.jpg",
   },
   gallery: {
+    communityOutreach: "/images/gallery/community-outreach-lahore.jpg",
+    educationProgramme: "/images/gallery/education-programme-lahore.jpg",
+    teamMeeting: "/images/gallery/team-meeting-lahore.jpg",
+    communityGathering: "/images/gallery/community-gathering-lahore.jpg",
     community1: "/images/gallery/community-work-1.jpg",
     community2: "/images/gallery/community-work-2.jpg",
     event1: "/images/gallery/event-1.jpg",
@@ -96,8 +102,9 @@ async function main() {
       { key: "org.summary", value: "A faith-inspired charity serving families in Lahore and Sheikhupura through school support, food relief, and compassionate practical help." },
       { key: "org.email", value: ORG_EMAIL },
       { key: "org.phone", value: ORG_PHONE },
+      { key: "org.landline", value: ORG_LANDLINE },
       { key: "org.address", value: ORG_ADDRESS },
-      { key: "org.charity_number", value: "1234567" },
+      { key: "org.crn", value: ORG_CRN },
       { key: "donation.suggested_amounts", value: JSON.stringify([10, 25, 50, 100, 250]) },
       { key: "home.hero.title", value: "Restoring Hope. Transforming Lives." },
       { key: "home.hero.description", value: "Promise and Hope is a faith-inspired charity helping children stay in school and supporting families with food relief in Lahore and Sheikhupura." },
@@ -306,15 +313,43 @@ async function main() {
 
   await prisma.galleryItem.createMany({
     data: [
-      { title: "Community Outreach Day", category: "Community Work", imageUrl: IMG.gallery.community1, alt: "Volunteers at community outreach", sortOrder: 0 },
-      { title: "Neighbourhood Support Programme", category: "Community Work", imageUrl: IMG.gallery.community2, alt: "Families at community centre", sortOrder: 1 },
-      { title: "Annual Hope Gala", category: "Events", imageUrl: IMG.gallery.event1, alt: "Annual charity gala", sortOrder: 2 },
-      { title: "Volunteer Appreciation Evening", category: "Events", imageUrl: IMG.gallery.event2, alt: "Volunteer appreciation event", sortOrder: 3 },
-      { title: "School Support Day", category: "Relief Projects", imageUrl: IMG.gallery.relief1, alt: "School supplies for distribution", sortOrder: 4 },
-      { title: "Food Parcel Distribution", category: "Relief Projects", imageUrl: IMG.gallery.relief2, alt: "Food parcels for families", sortOrder: 5 },
-      { title: "Dedicated Volunteers", category: "Volunteers", imageUrl: IMG.gallery.volunteer1, alt: "Volunteers at community project", sortOrder: 6 },
-      { title: "Youth Volunteer Programme", category: "Volunteers", imageUrl: IMG.gallery.volunteer2, alt: "Young volunteers", sortOrder: 7 },
-      { title: "Team Serving Together", category: "Volunteers", imageUrl: IMG.gallery.volunteer3, alt: "Volunteer team", sortOrder: 8 },
+      {
+        title: "Community Outreach in Lahore",
+        category: "Community Work",
+        imageUrl: IMG.gallery.communityOutreach,
+        alt: "Promise and Hope team at a community outreach visit in Lahore",
+        sortOrder: 0,
+      },
+      {
+        title: "Education Programme — Lahore",
+        category: "Education",
+        imageUrl: IMG.gallery.educationProgramme,
+        alt: "Children and families supported through Promise and Hope education programme in Lahore",
+        sortOrder: 1,
+      },
+      {
+        title: "Team Planning Meeting",
+        category: "Community Work",
+        imageUrl: IMG.gallery.teamMeeting,
+        alt: "Promise and Hope team meeting to plan community support in Lahore",
+        sortOrder: 2,
+      },
+      {
+        title: "Community Gathering",
+        category: "Community Work",
+        imageUrl: IMG.gallery.communityGathering,
+        alt: "Families and children gathered at a Promise and Hope community event",
+        sortOrder: 3,
+      },
+      { title: "Community Outreach Day", category: "Community Work", imageUrl: IMG.gallery.community1, alt: "Volunteers at community outreach", sortOrder: 4 },
+      { title: "Neighbourhood Support Programme", category: "Community Work", imageUrl: IMG.gallery.community2, alt: "Families at community centre", sortOrder: 5 },
+      { title: "Annual Hope Gala", category: "Events", imageUrl: IMG.gallery.event1, alt: "Annual charity gala", sortOrder: 6 },
+      { title: "Volunteer Appreciation Evening", category: "Events", imageUrl: IMG.gallery.event2, alt: "Volunteer appreciation event", sortOrder: 7 },
+      { title: "School Support Day", category: "Relief Projects", imageUrl: IMG.gallery.relief1, alt: "School supplies for distribution", sortOrder: 8 },
+      { title: "Food Parcel Distribution", category: "Relief Projects", imageUrl: IMG.gallery.relief2, alt: "Food parcels for families", sortOrder: 9 },
+      { title: "Dedicated Volunteers", category: "Volunteers", imageUrl: IMG.gallery.volunteer1, alt: "Volunteers at community project", sortOrder: 10 },
+      { title: "Youth Volunteer Programme", category: "Volunteers", imageUrl: IMG.gallery.volunteer2, alt: "Young volunteers", sortOrder: 11 },
+      { title: "Team Serving Together", category: "Volunteers", imageUrl: IMG.gallery.volunteer3, alt: "Volunteer team", sortOrder: 12 },
     ],
   });
 
