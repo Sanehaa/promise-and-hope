@@ -25,7 +25,7 @@ export default async function TermsPage() {
           <p className="text-muted-foreground text-sm mb-8">Last updated: May 2026</p>
           <h2 className="font-heading text-2xl font-semibold mt-8 mb-4">Donations</h2>
           <p className="text-muted-foreground leading-relaxed mb-4">
-            All donations are voluntary gifts processed via Stripe. Donations are final and
+            All donations are voluntary gifts processed via Square. Donations are final and
             non-refundable except where required by law.
           </p>
           <h2 className="font-heading text-2xl font-semibold mt-8 mb-4">Governing Law</h2>

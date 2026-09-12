@@ -30,8 +30,8 @@ export default async function PrivacyPolicyPage() {
           </p>
           <h2 className="font-heading text-2xl font-semibold mt-8 mb-4">Payments</h2>
           <p className="text-muted-foreground leading-relaxed mb-4">
-            Donations are processed securely through Stripe. We do not store card details on our
-            servers. Stripe&apos;s privacy policy applies to payment data.
+            Donations are processed securely through Square. We do not store card details on our
+            servers. Square&apos;s privacy policy applies to payment data.
           </p>
           <h2 className="font-heading text-2xl font-semibold mt-8 mb-4">Contact</h2>
           <p className="text-muted-foreground leading-relaxed">

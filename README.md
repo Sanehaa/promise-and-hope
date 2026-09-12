@@ -1,17 +1,16 @@
 # Promise and Hope
 
-A modern, faith-inspired charity website built with Next.js, Prisma, SQLite/PostgreSQL, and Stripe.
+A modern, faith-inspired charity website built with Next.js, Prisma, SQLite/PostgreSQL, and Square donations.
 
 ## Requirements
 
 - Node.js 20.9+
-- Stripe account (test mode for development)
 
 ## Quick start
 
 ```bash
 npm install
-cp .env.example .env.local   # then add your Stripe keys
+cp .env.example .env.local
 npm run db:push
 npm run db:seed
 npm run dev
@@ -27,25 +26,21 @@ Copy `.env.example` to `.env.local`:
 |----------|-------------|
 | `DATABASE_URL` | **Pooled** Postgres URL for the app (`POSTGRES_PRISMA_URL` on Vercel) |
 | `DIRECT_URL` | Direct Postgres URL for migrations/seed only (`POSTGRES_URL_NON_POOLING`) |
-| `NEXT_PUBLIC_SITE_URL` | Public site URL for Stripe redirects |
-| `STRIPE_SECRET_KEY` | Stripe secret key (`sk_test_...`) |
-| `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Stripe publishable key (optional, for future Elements) |
-| `STRIPE_WEBHOOK_SECRET` | Webhook signing secret from Stripe CLI or Dashboard |
+| `NEXT_PUBLIC_SITE_URL` | Public site URL |
+| `NEXT_PUBLIC_SQUARE_PAYMENT_LINK` | Square payment link (defaults to Promise and Hope link if unset) |
 | `NEXT_PUBLIC_LOAD_LOCAL_IMAGES` | Set `true` when images exist in `/public/images/` |
+| `RESEND_API_KEY` | Resend API key for contact form emails |
+| `CONTACT_RECEIVER_EMAIL` | Inbox for contact form submissions |
+
+## Donations (Square)
+
+Donors complete the form on `/donate`, then are redirected to your [Square payment link](https://square.link/u/YB8kQy0g) to pay securely. Card details are handled entirely by Square — not stored on this site.
+
+Set `NEXT_PUBLIC_SQUARE_PAYMENT_LINK` in Vercel if you change the link in Square.
 
 ## Database
 
 All content lives in the database — nothing is hardcoded in the app.
-
-### Models
-
-- **SiteSetting** — org info, hero copy, donation amounts, CTAs
-- **PageHero** — per-page banner images and text
-- **NavLink** — main and footer navigation
-- **Service, Project, CaseStory, RegionalOffice, GalleryItem**
-- **Testimonial, ImpactStat, CoreValue, TimelineEvent, TeamMember**
-- **DonationCause, Donation** — causes and payment records
-- **ContactMessage, NewsletterSubscriber**
 
 ### Commands
 
@@ -58,102 +53,35 @@ npm run db:migrate   # Create migrations (production)
 
 ### Production database
 
-The schema uses PostgreSQL. Set two connection strings in Vercel:
+Set two connection strings in Vercel:
 
 | Vercel env var | Map from (Vercel Postgres integration) |
 |----------------|----------------------------------------|
 | `DATABASE_URL` | `POSTGRES_PRISMA_URL` |
 | `DIRECT_URL` | `POSTGRES_URL_NON_POOLING` |
 
-**Do not** put a URL containing `prisma_migration` in `DATABASE_URL`. That role is for migrations only and causes `too many connections` on serverless.
-
-After setting env vars, redeploy. Run migrations once locally or in CI:
+After setting env vars, redeploy. Seed once:
 
 ```bash
-DIRECT_URL="..." DATABASE_URL="..." npx prisma db push
 DIRECT_URL="..." DATABASE_URL="..." npm run db:seed
 ```
 
 ## Deploying on Vercel
 
-1. **Storage** — Add Vercel Postgres (or Neon/Supabase) to the project.
-2. **Environment variables** in Vercel → Settings → Environment Variables:
-
-   | Name | Value |
-   |------|--------|
-   | `DATABASE_URL` | `POSTGRES_PRISMA_URL` (pooled) |
-   | `DIRECT_URL` | `POSTGRES_URL_NON_POOLING` |
-   | `NEXT_PUBLIC_SITE_URL` | `https://your-domain.vercel.app` |
-   | Stripe keys | as in `.env.example` |
-
-3. **Redeploy** after changing env vars.
-4. **Seed** the production DB once (from your machine using `DIRECT_URL`).
-
-If you use **Neon**, set `DATABASE_URL` to the `-pooler` host and append `?pgbouncer=true&connection_limit=1`.
-
-## Stripe donations
-
-1. Add keys to `.env.local`
-2. Donate form → `POST /api/donate/create-checkout` → Stripe Checkout
-3. Success redirect → `/donate/success?session_id=...` (confirms payment with Stripe immediately)
-4. Webhook `POST /api/stripe/webhook` — backup for completing donations if the user closes the tab before the success page loads
-
-### Production Stripe webhook (recommended)
-
-In [Stripe Dashboard → Webhooks](https://dashboard.stripe.com/webhooks), add:
-
-- **URL:** `https://your-domain.vercel.app/api/stripe/webhook`
-- **Events:** `checkout.session.completed`, `checkout.session.expired`
-- Copy the signing secret to Vercel as `STRIPE_WEBHOOK_SECRET`
-
-Without this, donations still complete via the success page, but project totals may not update if the user never lands there.
-
-### Local webhook testing
-
-```bash
-stripe listen --forward-to localhost:3000/api/stripe/webhook
-```
-
-Copy the webhook signing secret into `STRIPE_WEBHOOK_SECRET`.
-
-Use test card: `4242 4242 4242 4242`.
+1. Add Vercel Postgres (or Neon/Supabase).
+2. Set environment variables (see table above).
+3. Redeploy and seed the production DB once.
 
 ## Images
 
-Place files under `/public/images/{hero,projects,stories,gallery,team,offices}/` and update URLs in the database via **Prisma Studio** (`npm run db:studio`) on `PageHero`, `Project`, `Service`, etc.
+Place files under `/public/images/{hero,projects,stories,gallery,team,offices}/` and update URLs via **Prisma Studio** (`npm run db:studio`).
 
 Set `NEXT_PUBLIC_LOAD_LOCAL_IMAGES=true` to load real files instead of placeholders.
-
-## Editing content
-
-Use **Prisma Studio** (`npm run db:studio`) or any SQL client. No code changes needed for:
-
-- Projects, stories, services, offices, gallery
-- Navigation links
-- Site settings and page heroes
-- Donation causes and suggested amounts
-- Team, timeline, values, testimonials, impact stats
-
-## Project structure
-
-```
-prisma/
-  schema.prisma    # Database schema
-  seed.ts          # Initial data (run once)
-src/
-  app/             # Pages and API routes
-  components/      # UI components
-  lib/
-    prisma.ts      # DB client
-    queries/       # Data access layer
-    stripe.ts      # Stripe client
-  types/           # Shared TypeScript types
-```
 
 ## Tech stack
 
 - Next.js 16 (App Router)
 - Prisma 5 + SQLite (dev) / PostgreSQL (prod)
-- Stripe Checkout
+- Square payment links
 - TypeScript, Tailwind CSS v4, Framer Motion
 - React Hook Form + Zod

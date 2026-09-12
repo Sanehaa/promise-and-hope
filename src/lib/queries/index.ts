@@ -212,13 +212,6 @@ export async function getDonationByReference(reference: string) {
   });
 }
 
-export async function getDonationByStripeSession(sessionId: string) {
-  return prisma.donation.findUnique({
-    where: { stripeSessionId: sessionId },
-    include: { cause: true },
-  });
-}
-
 export function parseJsonArray(value: string): string[] {
   try {
     const parsed = JSON.parse(value);

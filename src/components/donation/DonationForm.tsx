@@ -4,7 +4,6 @@ import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion, AnimatePresence } from "framer-motion";
-import { toast } from "sonner";
 import { Lock } from "lucide-react";
 import { donationFormSchema, type DonationFormValues } from "@/lib/validations";
 import type { DonationCauseItem } from "@/types/content";
@@ -22,6 +21,7 @@ import {
 } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DonationSummary } from "./DonationSummary";
+import { getSquarePaymentLink } from "@/lib/square";
 import { cn, formatCurrency } from "@/lib/utils";
 
 type DonationFormProps = {
@@ -30,7 +30,7 @@ type DonationFormProps = {
   projectId?: string;
 };
 
-export function DonationForm({ causes, suggestedAmounts, projectId }: DonationFormProps) {
+export function DonationForm({ causes, suggestedAmounts }: DonationFormProps) {
   const defaultAmount = suggestedAmounts.includes(25) ? 25 : suggestedAmounts[0] ?? 25;
   const [selectedPreset, setSelectedPreset] = useState<number | null>(defaultAmount);
   const [isCustom, setIsCustom] = useState(false);
@@ -65,26 +65,9 @@ export function DonationForm({ causes, suggestedAmounts, projectId }: DonationFo
     setValue("amount", value, { shouldValidate: true });
   };
 
-  const onSubmit = async (data: DonationFormValues) => {
+  const onSubmit = async () => {
     setIsSubmitting(true);
-    try {
-      const res = await fetch("/api/donate/create-checkout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...data, projectId }),
-      });
-      const result = await res.json();
-      if (!res.ok) throw new Error(result.error ?? "Checkout failed");
-      if (result.url) {
-        window.location.href = result.url;
-        return;
-      }
-      throw new Error("No checkout URL returned");
-    } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Something went wrong. Please try again.");
-    } finally {
-      setIsSubmitting(false);
-    }
+    window.location.href = getSquarePaymentLink();
   };
 
   return (
@@ -295,15 +278,15 @@ export function DonationForm({ causes, suggestedAmounts, projectId }: DonationFo
           <CardContent className="flex items-center gap-3 p-4">
             <Lock className="h-5 w-5 shrink-0 text-primary" aria-hidden />
             <p className="text-sm text-muted-foreground">
-              You will be redirected to Stripe&apos;s secure checkout to complete your payment.
+              You will be redirected to Square&apos;s secure checkout to complete your payment.
+              Please confirm your donation amount and frequency there — they aren&apos;t
+              carried over automatically from this form yet.
             </p>
           </CardContent>
         </Card>
 
         <Button type="submit" size="lg" className="w-full" disabled={isSubmitting}>
-          {isSubmitting
-            ? "Redirecting to secure checkout..."
-            : `Continue to Payment — ${formatCurrency(amount)}`}
+          {isSubmitting ? "Redirecting to secure checkout..." : "Continue to Payment"}
         </Button>
       </div>
 
