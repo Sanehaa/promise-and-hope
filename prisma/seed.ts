@@ -301,7 +301,7 @@ async function main() {
         name: "Sheikhupura Programme Office",
         region: "Punjab, Pakistan",
         address: "Promise and Hope Centre, Gloria Colony, Sheikhupura, Pakistan",
-        phone: ORG_PHONE,
+        phone: "+92 346 5199378",
         email: ORG_EMAIL,
         hours: "Monday – Friday: 9:00 AM – 4:30 PM (PKT)",
         imageUrl: IMG.offices.southAsia,
