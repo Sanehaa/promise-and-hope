@@ -21,8 +21,8 @@ export default function DonationSuccessPage() {
             communities find strength to rebuild.
           </p>
           <p className="mt-6 text-sm text-muted-foreground">
-            If you completed your donation through Zeffy, you should receive a confirmation
-            email from them shortly.
+            If you have made a bank transfer, thank you — we will acknowledge your gift when
+            we receive it. Email us if you would like a receipt.
           </p>
           <p className="mt-8 text-muted-foreground">
             Your kindness creates ripples of hope that reach far beyond what we can see.

@@ -1,6 +1,6 @@
 # Promise and Hope
 
-A modern, faith-inspired charity website built with Next.js, Prisma, SQLite/PostgreSQL, and Zeffy donations.
+A modern, faith-inspired charity website built with Next.js, Prisma, SQLite/PostgreSQL, and bank transfer donations.
 
 ## Requirements
 
@@ -27,19 +27,13 @@ Copy `.env.example` to `.env.local`:
 | `DATABASE_URL` | **Pooled** Postgres URL for the app (`POSTGRES_PRISMA_URL` on Vercel) |
 | `DIRECT_URL` | Direct Postgres URL for migrations/seed only (`POSTGRES_URL_NON_POOLING`) |
 | `NEXT_PUBLIC_SITE_URL` | Public site URL |
-| `NEXT_PUBLIC_ZEFFY_DONATION_URL` | Zeffy donation form link (from your Zeffy dashboard) |
-| `NEXT_PUBLIC_ZEFFY_EMBED_SRC` | Optional Zeffy embed iframe URL (donate form on `/donate`) |
 | `NEXT_PUBLIC_LOAD_LOCAL_IMAGES` | Set `true` when images exist in `/public/images/` |
 | `RESEND_API_KEY` | Resend API key for contact form emails |
 | `CONTACT_RECEIVER_EMAIL` | Inbox for contact form submissions |
 
-## Donations (Zeffy)
+## Donations (bank transfer)
 
-1. In [Zeffy](https://www.zeffy.com), open **Campaigns** → your donation campaign → **Share** → copy the **donation form link**.
-2. Add it to `.env.local` and Vercel as `NEXT_PUBLIC_ZEFFY_DONATION_URL`.
-3. (Optional) **Share → Embed → Campaign**, copy the iframe `src` URL into `NEXT_PUBLIC_ZEFFY_EMBED_SRC` to show the form on `/donate`.
-
-See [Zeffy: embed a campaign on your website](https://support.zeffy.com/how-to-embed-your-zeffy-campaign-on-your-website-km0gv).
+HSBC account details are stored in **SiteSetting** (`donation.bank.*`) and seeded via `npm run db:seed`. Edit in Prisma Studio if needed.
 
 ## Database
 
@@ -85,6 +79,6 @@ Set `NEXT_PUBLIC_LOAD_LOCAL_IMAGES=true` to load real files instead of placehold
 
 - Next.js 16 (App Router)
 - Prisma 5 + SQLite (dev) / PostgreSQL (prod)
-- Zeffy donation links & embed
+- Bank transfer donation details
 - TypeScript, Tailwind CSS v4, Framer Motion
 - React Hook Form + Zod

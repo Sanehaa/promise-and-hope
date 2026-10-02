@@ -20,6 +20,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { calculateProgress, formatCurrency } from "@/lib/utils";
 import { toProjectView } from "@/types/content";
 import { createPageMetadata } from "@/lib/metadata";
+import { bankDetailsFromSettings } from "@/lib/bank-details";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -48,9 +49,18 @@ export default async function ProjectDetailPage({ params }: Props) {
   const [causes, suggestedAmounts, settings, ctaHero] = await Promise.all([
     getDonationCauses(),
     getSuggestedAmounts(),
-    getSiteSettings(["donation.cta.title", "donation.cta.description"]),
+    getSiteSettings([
+      "donation.cta.title",
+      "donation.cta.description",
+      "donation.bank.account_name",
+      "donation.bank.bank_name",
+      "donation.bank.sort_code",
+      "donation.bank.account_number",
+    ]),
     getPageHero("donation-cta"),
   ]);
+
+  const bank = bankDetailsFromSettings(settings);
 
   return (
     <>
@@ -138,6 +148,7 @@ export default async function ProjectDetailPage({ params }: Props) {
               causes={causes}
               suggestedAmounts={suggestedAmounts}
               projectId={raw.id}
+              bank={bank}
             />
           </div>
         </div>

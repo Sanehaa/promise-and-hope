@@ -2,10 +2,10 @@ import type { Metadata } from "next";
 import { Shield, Eye, Heart } from "lucide-react";
 import { PageHero } from "@/components/shared/PageHero";
 import { DonationForm } from "@/components/donation/DonationForm";
-import { ZeffyDonationEmbed } from "@/components/donation/ZeffyDonationEmbed";
-import { ZeffyDonateQr } from "@/components/donation/ZeffyDonateQr";
+import { BankTransferDetails } from "@/components/donation/BankTransferDetails";
 import { ScrollReveal } from "@/components/shared/ScrollReveal";
-import { getPageHero, getDonationCauses, getSuggestedAmounts } from "@/lib/queries";
+import { getPageHero, getDonationCauses, getSuggestedAmounts, getSiteSettings } from "@/lib/queries";
+import { bankDetailsFromSettings } from "@/lib/bank-details";
 import { createPageMetadata } from "@/lib/metadata";
 
 export const metadata: Metadata = createPageMetadata({
@@ -22,11 +22,19 @@ const trustIndicators = [
 ];
 
 export default async function DonatePage() {
-  const [hero, causes, suggestedAmounts] = await Promise.all([
+  const [hero, causes, suggestedAmounts, bankSettings] = await Promise.all([
     getPageHero("donate"),
     getDonationCauses(),
     getSuggestedAmounts(),
+    getSiteSettings([
+      "donation.bank.account_name",
+      "donation.bank.bank_name",
+      "donation.bank.sort_code",
+      "donation.bank.account_number",
+    ]),
   ]);
+
+  const bank = bankDetailsFromSettings(bankSettings);
 
   return (
     <>
@@ -55,12 +63,9 @@ export default async function DonatePage() {
       </section>
 
       <section className="py-16 lg:py-20">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <DonationForm causes={causes} suggestedAmounts={suggestedAmounts} />
-          <div id="zeffy-donate">
-            <ZeffyDonationEmbed />
-          </div>
-          <ZeffyDonateQr />
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-10">
+          <DonationForm causes={causes} suggestedAmounts={suggestedAmounts} bank={bank} />
+          <BankTransferDetails bank={bank} />
         </div>
       </section>
     </>

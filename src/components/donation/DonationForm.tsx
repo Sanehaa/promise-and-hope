@@ -5,9 +5,10 @@ import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "sonner";
-import { Lock } from "lucide-react";
+import { Landmark } from "lucide-react";
 import { donationFormSchema, type DonationFormValues } from "@/lib/validations";
 import type { DonationCauseItem } from "@/types/content";
+import type { BankDetails } from "@/lib/bank-details";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -22,20 +23,19 @@ import {
 } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DonationSummary } from "./DonationSummary";
-import { getZeffyDonationUrl, getZeffyEmbedSrc } from "@/lib/zeffy";
 import { cn, formatCurrency } from "@/lib/utils";
 
 type DonationFormProps = {
   causes: DonationCauseItem[];
   suggestedAmounts: number[];
+  bank: BankDetails;
   projectId?: string;
 };
 
-export function DonationForm({ causes, suggestedAmounts }: DonationFormProps) {
+export function DonationForm({ causes, suggestedAmounts, bank }: DonationFormProps) {
   const defaultAmount = suggestedAmounts.includes(25) ? 25 : suggestedAmounts[0] ?? 25;
   const [selectedPreset, setSelectedPreset] = useState<number | null>(defaultAmount);
   const [isCustom, setIsCustom] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const {
     register,
@@ -66,24 +66,9 @@ export function DonationForm({ causes, suggestedAmounts }: DonationFormProps) {
     setValue("amount", value, { shouldValidate: true });
   };
 
-  const hasEmbed = Boolean(getZeffyEmbedSrc());
-
-  const onSubmit = async () => {
-    const zeffyUrl = getZeffyDonationUrl();
-    if (hasEmbed) {
-      document.getElementById("zeffy-donate")?.scrollIntoView({ behavior: "smooth" });
-      setIsSubmitting(false);
-      return;
-    }
-    if (!zeffyUrl) {
-      toast.error(
-        "Donation link is not configured yet. Add NEXT_PUBLIC_ZEFFY_DONATION_URL to your environment."
-      );
-      setIsSubmitting(false);
-      return;
-    }
-    setIsSubmitting(true);
-    window.location.href = zeffyUrl;
+  const onSubmit = () => {
+    document.getElementById("bank-transfer")?.scrollIntoView({ behavior: "smooth" });
+    toast.success("Use the HSBC bank details below to complete your transfer.");
   };
 
   return (
@@ -118,6 +103,12 @@ export function DonationForm({ causes, suggestedAmounts }: DonationFormProps) {
                 </div>
               )}
             />
+            {frequency === "monthly" && (
+              <p className="mt-3 text-xs text-muted-foreground">
+                For monthly giving, please set up a standing order to our bank account using the
+                details below.
+              </p>
+            )}
           </CardContent>
         </Card>
 
@@ -244,7 +235,7 @@ export function DonationForm({ causes, suggestedAmounts }: DonationFormProps) {
                 <Input id="donorPhone" type="tel" className="mt-1.5" {...register("phone")} />
               </div>
               <div>
-                <Label htmlFor="donorAddress">Billing Address (optional)</Label>
+                <Label htmlFor="donorAddress">Address (optional)</Label>
                 <Input id="donorAddress" className="mt-1.5" {...register("address")} />
               </div>
             </div>
@@ -292,21 +283,17 @@ export function DonationForm({ causes, suggestedAmounts }: DonationFormProps) {
 
         <Card className="border-primary/20 bg-secondary/20">
           <CardContent className="flex items-center gap-3 p-4">
-            <Lock className="h-5 w-5 shrink-0 text-primary" aria-hidden />
+            <Landmark className="h-5 w-5 shrink-0 text-primary" aria-hidden />
             <p className="text-sm text-muted-foreground">
-              {hasEmbed
-                ? "Use the secure Zeffy form below to complete your donation. Amount and frequency are chosen on Zeffy."
-                : "You will be redirected to Zeffy&apos;s secure checkout to complete your payment. Amount and frequency are chosen on Zeffy."}
+              Donations are made by bank transfer to our HSBC account. Sort code{" "}
+              <span className="font-semibold text-foreground">{bank.sortCode}</span>, account{" "}
+              <span className="font-semibold text-foreground">{bank.accountNumber}</span>.
             </p>
           </CardContent>
         </Card>
 
-        <Button type="submit" size="lg" className="w-full" disabled={isSubmitting}>
-          {hasEmbed
-            ? "Continue to donation form"
-            : isSubmitting
-              ? "Redirecting to Zeffy..."
-              : "Continue to Payment on Zeffy"}
+        <Button type="submit" size="lg" className="w-full">
+          View bank details to donate
         </Button>
       </div>
 
@@ -317,6 +304,7 @@ export function DonationForm({ causes, suggestedAmounts }: DonationFormProps) {
           causeSlug={cause}
           causes={causes}
           giftAid={giftAid}
+          bank={bank}
         />
       </div>
     </form>

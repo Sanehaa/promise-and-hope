@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { formatCurrency } from "@/lib/utils";
 import type { DonationCauseItem } from "@/types/content";
+import type { BankDetails } from "@/lib/bank-details";
 
 type DonationSummaryProps = {
   frequency: "one-time" | "monthly";
@@ -12,6 +13,7 @@ type DonationSummaryProps = {
   causeSlug: string;
   causes: DonationCauseItem[];
   giftAid: boolean;
+  bank: BankDetails;
 };
 
 export function DonationSummary({
@@ -20,6 +22,7 @@ export function DonationSummary({
   causeSlug,
   causes,
   giftAid,
+  bank,
 }: DonationSummaryProps) {
   const causeLabel =
     causes.find((c) => c.slug === causeSlug)?.label ?? "Where Most Needed";
@@ -57,9 +60,19 @@ export function DonationSummary({
           </p>
         )}
 
+        <div className="rounded-lg border border-border bg-muted/40 p-3 text-xs space-y-1.5">
+          <p className="font-semibold text-foreground">HSBC bank transfer</p>
+          <p>
+            Sort code: <span className="font-mono font-medium">{bank.sortCode}</span>
+          </p>
+          <p>
+            Account: <span className="font-mono font-medium">{bank.accountNumber}</span>
+          </p>
+        </div>
+
         <div className="space-y-3 pt-2">
           {[
-            { icon: Shield, text: "Secure Donation via Zeffy" },
+            { icon: Shield, text: "Direct bank transfer" },
             { icon: Eye, text: "Transparent Giving" },
             { icon: Heart, text: "Direct Community Impact" },
           ].map(({ icon: Icon, text }) => (
