@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Shield, Eye, Heart } from "lucide-react";
 import { PageHero } from "@/components/shared/PageHero";
 import { DonationForm } from "@/components/donation/DonationForm";
+import { ZeffyDonationEmbed } from "@/components/donation/ZeffyDonationEmbed";
+import { ZeffyDonateQr } from "@/components/donation/ZeffyDonateQr";
 import { ScrollReveal } from "@/components/shared/ScrollReveal";
 import { getPageHero, getDonationCauses, getSuggestedAmounts } from "@/lib/queries";
 import { createPageMetadata } from "@/lib/metadata";
@@ -55,6 +57,10 @@ export default async function DonatePage() {
       <section className="py-16 lg:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <DonationForm causes={causes} suggestedAmounts={suggestedAmounts} />
+          <div id="zeffy-donate">
+            <ZeffyDonationEmbed />
+          </div>
+          <ZeffyDonateQr />
         </div>
       </section>
     </>

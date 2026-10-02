@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion, AnimatePresence } from "framer-motion";
+import { toast } from "sonner";
 import { Lock } from "lucide-react";
 import { donationFormSchema, type DonationFormValues } from "@/lib/validations";
 import type { DonationCauseItem } from "@/types/content";
@@ -21,7 +22,7 @@ import {
 } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DonationSummary } from "./DonationSummary";
-import { getSquarePaymentLink } from "@/lib/square";
+import { getZeffyDonationUrl, getZeffyEmbedSrc } from "@/lib/zeffy";
 import { cn, formatCurrency } from "@/lib/utils";
 
 type DonationFormProps = {
@@ -65,9 +66,24 @@ export function DonationForm({ causes, suggestedAmounts }: DonationFormProps) {
     setValue("amount", value, { shouldValidate: true });
   };
 
+  const hasEmbed = Boolean(getZeffyEmbedSrc());
+
   const onSubmit = async () => {
+    const zeffyUrl = getZeffyDonationUrl();
+    if (hasEmbed) {
+      document.getElementById("zeffy-donate")?.scrollIntoView({ behavior: "smooth" });
+      setIsSubmitting(false);
+      return;
+    }
+    if (!zeffyUrl) {
+      toast.error(
+        "Donation link is not configured yet. Add NEXT_PUBLIC_ZEFFY_DONATION_URL to your environment."
+      );
+      setIsSubmitting(false);
+      return;
+    }
     setIsSubmitting(true);
-    window.location.href = getSquarePaymentLink();
+    window.location.href = zeffyUrl;
   };
 
   return (
@@ -278,15 +294,19 @@ export function DonationForm({ causes, suggestedAmounts }: DonationFormProps) {
           <CardContent className="flex items-center gap-3 p-4">
             <Lock className="h-5 w-5 shrink-0 text-primary" aria-hidden />
             <p className="text-sm text-muted-foreground">
-              You will be redirected to Square&apos;s secure checkout to complete your payment.
-              Please confirm your donation amount and frequency there — they aren&apos;t
-              carried over automatically from this form yet.
+              {hasEmbed
+                ? "Use the secure Zeffy form below to complete your donation. Amount and frequency are chosen on Zeffy."
+                : "You will be redirected to Zeffy&apos;s secure checkout to complete your payment. Amount and frequency are chosen on Zeffy."}
             </p>
           </CardContent>
         </Card>
 
         <Button type="submit" size="lg" className="w-full" disabled={isSubmitting}>
-          {isSubmitting ? "Redirecting to secure checkout..." : "Continue to Payment"}
+          {hasEmbed
+            ? "Continue to donation form"
+            : isSubmitting
+              ? "Redirecting to Zeffy..."
+              : "Continue to Payment on Zeffy"}
         </Button>
       </div>
 

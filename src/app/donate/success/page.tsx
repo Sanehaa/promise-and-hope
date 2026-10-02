@@ -21,7 +21,7 @@ export default function DonationSuccessPage() {
             communities find strength to rebuild.
           </p>
           <p className="mt-6 text-sm text-muted-foreground">
-            If you completed your donation through Square, you should receive a confirmation
+            If you completed your donation through Zeffy, you should receive a confirmation
             email from them shortly.
           </p>
           <p className="mt-8 text-muted-foreground">

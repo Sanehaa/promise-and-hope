@@ -59,7 +59,7 @@ export function DonationSummary({
 
         <div className="space-y-3 pt-2">
           {[
-            { icon: Shield, text: "Secure Donation via Square" },
+            { icon: Shield, text: "Secure Donation via Zeffy" },
             { icon: Eye, text: "Transparent Giving" },
             { icon: Heart, text: "Direct Community Impact" },
           ].map(({ icon: Icon, text }) => (
